@@ -1,5 +1,9 @@
 # EventFull
 
+Do you need one website from which you can view all events by the place and date you want?
+Our website guarantees that you can find the events you want and save your own list of them arranged by date.
+You can also edit your list and delete events that you do not want anymore.
+Also, you can see how many people are interested in each event, which helps you choose.
 
 ## Project Plan 
  Project Name :
@@ -120,6 +124,6 @@ Team Members :
 
  ![](./img/wireframe.jpeg)
  **DataBase Diagram**
- 
+
  ![](./img/databaseDiagram.jpg)
 
