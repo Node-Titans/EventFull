@@ -1,0 +1,318 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
+
+/* @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Boogaloo&display=swap');
+
+
+body{
+    background-color: #fafafa;
+    font-family: 'Boogaloo', cursive !important;
+	
+}
+
+
+* {
+   
+    box-sizing: border-box;
+    /* font-family: 'Caveat', cursive; */
+}
+
+
+footer{
+    margin-top: 100px;
+    font-family: 'Boogaloo', cursive !important;
+    font-size: 22px;
+}
+.header {
+  min-height: 100px;
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.header {
+    background-color: #005691;
+    color: #ddf;
+}
+
+
+
+
+/* sticky */
+
+.sticky{
+    position: fixed;
+    /* background-color: #004a7c; */
+    background-image: linear-gradient(306deg, rgba(54, 54, 54, 0.05) 0%, rgba(54, 54, 54, 0.05) 33.333%,rgba(85, 85, 85, 0.05) 33.333%, rgba(85, 85, 85, 0.05) 66.666%,rgba(255, 255, 255, 0.05) 66.666%, rgba(255, 255, 255, 0.05) 99.999%),linear-gradient(353deg, rgba(81, 81, 81, 0.05) 0%, rgba(81, 81, 81, 0.05) 33.333%,rgba(238, 238, 238, 0.05) 33.333%, rgba(238, 238, 238, 0.05) 66.666%,rgba(32, 32, 32, 0.05) 66.666%, rgba(32, 32, 32, 0.05) 99.999%),linear-gradient(140deg, rgba(192, 192, 192, 0.05) 0%, rgba(192, 192, 192, 0.05) 33.333%,rgba(109, 109, 109, 0.05) 33.333%, rgba(109, 109, 109, 0.05) 66.666%,rgba(30, 30, 30, 0.05) 66.666%, rgba(30, 30, 30, 0.05) 99.999%),linear-gradient(189deg, rgba(77, 77, 77, 0.05) 0%, rgba(77, 77, 77, 0.05) 33.333%,rgba(55, 55, 55, 0.05) 33.333%, rgba(55, 55, 55, 0.05) 66.666%,rgba(145, 145, 145, 0.05) 66.666%, rgba(145, 145, 145, 0.05) 99.999%),linear-gradient(90deg, rgb(9, 201, 186),rgb(53, 179, 28));
+    transition: 13.5s;
+    overflow: hidden;
+    width: 100%;
+    z-index: 99999999;
+  }
+  .sticky #myLinks {      
+    float: right;
+    display: none;
+  }
+  
+  
+  .sticky a {
+    float: left;
+    color: white;
+    padding: 22.5px 16px;
+    text-decoration: none;
+    font-size: 22px;
+  }
+  .nhov a:hover{
+    color: white !important;
+  }
+    .sticky a:hover {
+    background-color:#e8f1f5 ;
+    color: black;
+    }
+    .sticky a.icon {
+        float: right;
+      }
+    
+
+
+.active{
+    font-family: 'Gloria Hallelujah', cursive ;
+
+}
+#logospan{
+    color: #FFC107;
+}
+
+
+
+
+
+
+.footerOne{
+    /* background: #010184; */
+    /* background-color: #630074; */ 
+    /* background-color: #005691; */
+    
+    margin-top: 112px;
+    background-image: linear-gradient(306deg, rgba(54, 54, 54, 0.05) 0%, rgba(54, 54, 54, 0.05) 33.333%,rgba(85, 85, 85, 0.05) 33.333%, rgba(85, 85, 85, 0.05) 66.666%,rgba(255, 255, 255, 0.05) 66.666%, rgba(255, 255, 255, 0.05) 99.999%),linear-gradient(353deg, rgba(81, 81, 81, 0.05) 0%, rgba(81, 81, 81, 0.05) 33.333%,rgba(238, 238, 238, 0.05) 33.333%, rgba(238, 238, 238, 0.05) 66.666%,rgba(32, 32, 32, 0.05) 66.666%, rgba(32, 32, 32, 0.05) 99.999%),linear-gradient(140deg, rgba(192, 192, 192, 0.05) 0%, rgba(192, 192, 192, 0.05) 33.333%,rgba(109, 109, 109, 0.05) 33.333%, rgba(109, 109, 109, 0.05) 66.666%,rgba(30, 30, 30, 0.05) 66.666%, rgba(30, 30, 30, 0.05) 99.999%),linear-gradient(189deg, rgba(77, 77, 77, 0.05) 0%, rgba(77, 77, 77, 0.05) 33.333%,rgba(55, 55, 55, 0.05) 33.333%, rgba(55, 55, 55, 0.05) 66.666%,rgba(145, 145, 145, 0.05) 66.666%, rgba(145, 145, 145, 0.05) 99.999%),linear-gradient(90deg, rgb(9, 201, 186),rgb(53, 179, 28));
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+	/* box-sizing: border-box; */
+	width: 100%;
+	/* font: bold 16px sans-serif; */
+	text-align: left;
+	padding: 50px 60px 40px;
+	overflow: hidden;
+}
+
+
+
+  
+  
+  
+  
+  
+  
+  /* end btn */ */
+/* Footer left */
+
+.footerOne .footerTwo{
+	float: left;
+}
+
+
+.footerOne .footerTwo{
+	float: left;
+}
+
+/* The company logo */
+
+.footerOne h3{
+  font-family: 'Boogaloo',cursive;
+	color:  #ffffff;
+  margin: 0 0 10px;
+  font-size: 50px;
+  font-weight: 400;
+
+}
+
+.footerOne h3 span{
+	color:  #FFC107;
+}
+
+/* Footer links */
+
+.footerOne .footerThree{
+	color:  #fafafa;
+	margin: 0 0 10px;
+	padding: 0;
+}
+
+.footerOne .footerThree a{
+	display:inline-block;
+	line-height: 1.8;
+	text-decoration: none;
+	color:  inherit;
+}
+
+.footerOne .footer-company-name{
+	color:  #fafafa;
+	font-size: 14px;
+	font-weight: normal;
+	margin: 0;
+}
+
+/* Footer social icons */
+
+.footerOne .footer-icons{
+	margin-top: 40px;
+}
+
+.footerOne .footer-icons a{
+	display: inline-block;
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+	background-color:  #e8f1f5;
+	border-radius: 2px;
+	font-size: 20px;
+	color: #3e7a39;
+	text-align: center;
+	line-height: 35px;
+	margin-right: 3px;
+	margin-bottom: 5px;
+}
+
+
+
+
+
+/* Footer Right */
+
+.footerOne .footerFour{
+	float: right;
+}
+
+.footerOne .footerFour p{
+	display: inline-block;
+	vertical-align: top;
+	margin: 15px 42px 0 0;
+	color: #ffffff;
+}
+
+/* The contact form */
+
+.footerOne form{
+	display: inline-block;
+}
+
+.footerOne form input,
+.footerOne form textarea{
+	display: block;
+	border-radius: 3px;
+	box-sizing: border-box;
+	background-color:  #e8f1f5;
+	box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1);
+	border: none;
+	resize: none;
+
+	/* font: inherit; */
+	font-size: 14px;
+	font-weight: normal;
+	color:  #fafafa;
+
+	width: 400px;
+	padding: 18px;
+}
+
+.footerOne ::-webkit-input-placeholder {
+    color:  #14471d;
+    
+}
+
+.footerOne ::-moz-placeholder {
+	color:  #23574a;
+	opacity: 1;
+}
+
+.footerOne :-ms-input-placeholder{
+	color:  #5c666b;
+}
+
+
+.footerOne form input{
+	height: 55px;
+	margin-bottom: 15px;
+}
+
+.footerOne form textarea{
+	height: 100px;
+	margin-bottom: 20px;
+}
+
+.footerOne form button{
+	border-radius: 3px;
+	color:  #5c666b;
+    background-color:  #e8f1f5;
+	border: 0;
+	padding: 15px 50px;
+	/* font-weight: bold; */
+	float: right;
+}
+
+/* If you don't want the footer to be responsive, remove these media queries */
+
+@media (max-width: 1000px) {
+
+	.footerOne {
+		font: bold 14px sans-serif;
+	}
+
+	.footerOne .footer-company-name{
+		font-size: 12px;
+	}
+
+	.footerOne form input,
+	.footerOne form textarea{
+		width: 250px;
+	}
+
+	.footerOne form button{
+		padding: 10px 35px;
+	}
+
+}
+
+@media (max-width: 800px) {
+
+	.footerOne{
+		padding: 30px;
+	}
+
+	.footerOne .footerTwo,
+	.footerOne .footerFour{
+		float: none;
+		max-width: 300px;
+		margin: 0 auto;
+	}
+
+	.footerOne .footerTwo{
+		margin-bottom: 40px;
+	}
+
+	.footerOne form{
+		margin-top: 30px;
+	}
+
+	.footerOne form{
+		display: block;
+	}
+
+	.footerOne form button{
+		float: none;
+	}
+}
