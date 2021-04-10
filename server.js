@@ -1,44 +1,3 @@
-<<<<<<< HEAD
-"use strict";
-require('dotenv').config();
-const express = require('express');
-const superagent = require('superagent');
-
-const app = express();
-const cors = require('cors');
-const PORT = process.env.PORT || 3004;
-const methodOverride = require('method-override');
-
-const pg = require('pg');
-//const dbClient = new pg.Client(process.env.DATABASE_URL)
-//dbClient.connect();
-app.use(methodOverride('_methode'))
-app.use(express.static('./public/styles'));
-app.use(express.static('./public/js'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
-
-app.set('view engine', 'ejs');
-app.set("views", ".")
-app.get('/', (req, res) => {
-
-    res.render('pages/event/index');
-});
-
-app.get('*', (req, res) => {
-    res.send('Not found')
-});
-
-const errorHandler = (err, req, res) => {
-    console.log('err', err);
-    res.status(500).render('pages/error', { err: err });
-};
-
-app.listen(PORT, () => {
-    console.log(`Listening on PORT ${PORT}`);
-});
-=======
 'use strict';
 // Dependencies
 require('dotenv').config();
@@ -53,48 +12,18 @@ const app = express();
 const PORT = process.env.PORT || 3030;
 const DATABASE_URL = process.env.DATABASE_URL;
 
-// Setup database
-const client =  new pg.Client({
-  connectionString: DATABASE_URL,
-});
-
 // Middleware
 app.use(cors());
 app.use(methodOverride('_method'));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
+// database Setup
+const client =  new pg.Client({
+  connectionString: DATABASE_URL,
+});
 
-
-
-//
-
-
-// function renderSearchResults (req , res) {
-//   const query = {
-//      apikey : process.env.EVENT_KEY ,
-//     // locale: '*' ,
-//     keyword : req.body.searched,
-//     sort: req.body.sortBy ,
-//     countryCode :  req.body.countryCode
-//   }
-//   console.log('query.keyword' ,query.keyword);
-//   const url =  'https://app.ticketmaster.com/discovery/v2/events?apikey=HybkkamcQAG2qkxKtCkNknuFZvrNBLlx&locale=*';
-
-//   superagent.get(url).query(query).then((data) => {
-//     const eventData = data.body._embedded.events;
-//     const event = eventData.map(event => {
-//       return new Event(event);
-//     })
-
-
-//     res.render('pages/event/search' , { events: event });
-
-//   }).catch((err) => errorHandler(err, req, res));
-
-// }
 
 const renderSearchResults = (req, res) => {
   const query = {
@@ -137,13 +66,19 @@ const renderSearchPage = (req, res) => {
 
 
 // Error Handler
-function errorHandler(err, req, res) {
-  res.render('pages/error', { err :err.message});
-}
+// function errorHandler(err, req, res) {
+//   res.render('pages/error', { err :err.message});
+// }
 
 // wrong path rout
 const handelWrongPath = (err, req, res) => {
   errorHandler(err, req ,res);
+};
+
+// ERROR HANDLER
+const errorHandler = (err, req, res) => {
+  console.log('err', err);
+  res.status(500).render('pages/error', { err: err });
 };
 
 // database connection
@@ -179,4 +114,3 @@ app.post('/searches', renderSearchResults);
 // wrong path rout
 app.use('*',handelWrongPath);
 
->>>>>>> b2517155a26b831f81460c5e174a376f290264d0
