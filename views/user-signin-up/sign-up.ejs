@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+
+</head>
+
+<body>
+        <div class="Sign-UP">
+          
+            <h1> Sign Up </h1>
+              <%= typeof msg != 'undefined' ? msg :'' %>
+              <form action="/upload" method="post" enctype="multipart/form-data">
+              <fieldset>
+              <legend>Upload your profile pic</legend>
+              <input type="file" id="profileImage" name="image">
+              <input type="submit" value="upload">
+             </fieldset>
+              </form>
+
+
+              <form action="" method="POST" >
+              <fieldset>
+              <legend>Your Basic Info</legend>
+              <label for="name">Name:</label>
+              <input type="text" id="name" name="username" required>
+               <br>
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" required>
+               <br>
+              <label for="password">Password:</label>
+              <input type="password" id="password" name="password" required>
+               <br>
+              <label for="country">Country:</label>
+              <input type="text" id="country" name="country" required>
+              <br>
+              <label for="phoneNumber">phoneNumber:</label>
+              <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="format:xxxx-xxx-xxx" pattern="^\d{4}-\d{3}-\d{3}$" required>
+              <br>
+              <input type="checkbox" id="checkAge" name="age" value="checkAge" required>
+              <label for="checkAge">I am older than 16 years old</label>
+              <br>
+              <input type="checkbox" id="accept" name="accept" value="accept" required>
+              <label for="accept">I accept EventsFull's use of my data for services</label>
+              <br>
+            </fieldset> 
+            <button type="submit">Sign Up</button>
+            </form>
+            
+            <p>Do you have an account? <a href='/sign-in' target="_blank" rel="noopener noreferrer">Sign In</a></p> 
+
+            </div>
+         
+ 
+</body>
+
+</html>
