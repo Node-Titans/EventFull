@@ -12,7 +12,7 @@ const multer = require('multer'); // to upload image
 
 
 // Setup environment
-const PORT = process.env.PORT || 3060;
+const PORT = process.env.PORT || 3030;
 const DATABASE_URL = process.env.DATABASE_URL;
 
 // Middleware
@@ -172,7 +172,7 @@ class Event {
   }
 
 }
-//init upload 
+//init upload
 const upload = multer({
   storage: storage,
   limits: { fieldSize: 1000000 },
@@ -200,13 +200,13 @@ function checkFileType(file, cb) {
 function handleProfilePic(req, res) {
   upload(req, res, (error) => {
     if (error) {
-      res.render('user-signin-up/sign-up', {
+      res.render('pages/user-signin-up/sign-up', {
         msg: error,
       });
     } else {
 
-      if (req.file == undefined) {
-        res.render('user-signin-up/sign-up', {
+      if (req.file === undefined) {
+        res.render('pages/user-signin-up/sign-up', {
           msg: 'Error : No file selected !!',
         });
       } else {
@@ -214,7 +214,7 @@ function handleProfilePic(req, res) {
         const sqlQuery = 'INSERT INTO images (image) VALUES($1) RETURNING id;';
         const safeValues = [image];
         client.query(sqlQuery, safeValues).then(() => {
-          res.render('user-signin-up/sign-up', {
+          res.render('pages/user-signin-up/sign-up', {
             msg: 'file Uploaded ✔️',
           });
         })
@@ -226,6 +226,8 @@ function handleProfilePic(req, res) {
 
 
 // API home page Routes
+
+
 app.post('/homepage',addeventhomepage);
 app.post('/searchespage',addeventsearch)
 app.get('/user',renderyourlist);
@@ -234,16 +236,20 @@ app.get('/', renderMainPage);
 // Search Results
 app.post('/searches', renderSearchPage);
 // wrong path rout
-app.use('*', handelWrongPath);
 // handle upload profile image
 app.post('/upload', handleProfilePic);
-
 app.get('/sign-up', (req, res) => {
-  res.render('user-signin-up/sign-up')
+  res.render('pages/user-signin-up/sign-up')
 });
 
 app.get('/sign-in',(req,res)=>{
-  res.render("user-signin-up/sign-in");
+  // res.render('pages/user-signin-up/sign-in');
+  res.render('pages/user-signin-up/sign-in');
 });
-  
+app.use('*', handelWrongPath);
+
+
+
+
+
 
