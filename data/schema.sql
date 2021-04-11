@@ -14,18 +14,24 @@ create table events (
     url VARCHAR(400)
 );
 
-
-DROP TABLE IF EXISTS users;
-CREATE TABLE users (
+ DROP TABLE IF EXISTS users;
+ CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY NOT NULL,
   username VARCHAR(20) UNIQUE NOT NULL,
   age INT , CHECK (age>16),
   email VARCHAR(50) UNIQUE NOT NULL,
   password CHAR(60),
-  image VARCHAR(500),
   country  VARCHAR(255),
-  phoneNumber TEXT CHECK (phoneNumber ~* '^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$')
+  phoneNumber VARCHAR(255)
   );
+
+
+ DROP TABLE IF EXISTS images;
+  CREATE TABLE IF NOT EXISTS images (
+  id SERIAL PRIMARY KEY NOT NULL,
+  image VARCHAR(500)
+  );
+
   
 DROP TABLE IF EXISTS users_events ;
 CREATE TABLE  users_events (
