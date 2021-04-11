@@ -7,6 +7,8 @@ const cors = require('cors');
 const pg = require('pg');
 const methodOverride = require('method-override');
 const app = express();
+const path = require('path');
+const multer = require('multer'); // to upload image
 
 
 // Setup environment
@@ -22,11 +24,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 //  app.use(express.static('./public/styles'));
 app.use(express.static('./public/js'));
+
 // database Setup
-const client =  new pg.Client({
-  connectionString: DATABASE_URL,
+const client = new pg.Client({
+    connectionString: DATABASE_URL,
 });
 
+// set storage engine
+const storage = multer.diskStorage({
+    destination: './public/uploads/',
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+    }
+});
 
 const renderSearchPage = (req, res) => {
   const query = {
@@ -124,23 +134,23 @@ function eventDetails(req,res){
 
 // wrong path rout
 const handelWrongPath = (err, req, res) => {
-  errorHandler(err, req ,res);
+    errorHandler(err, req, res);
 };
 
 // ERROR HANDLER
 const errorHandler = (err, req, res) => {
-  console.log('err', err);
-  res.status(500).render('pages/error', { err: err });
+    console.log('err', err);
+    res.status(500).render('pages/error', { err: err });
 };
 
 // database connection
 client.connect().then(() => {
-  app.listen(PORT, () => {
-    console.log('connected to db', client.connectionParameters.database);
-    console.log(`The server is running on port ${PORT}`);
-  });
+    app.listen(PORT, () => {
+        console.log('connected to db', client.connectionParameters.database);
+        console.log(`The server is running on port ${PORT}`);
+    });
 }).catch(error => {
-  console.log('error', error);
+    console.log('error', error);
 });
 
 // Event Constructor
@@ -159,7 +169,60 @@ class Event {
     this.Description = data.info;
     this.url = data.url;
   }
+
 }
+//init upload 
+const upload = multer({
+    storage: storage,
+    limits: { fieldSize: 1000000 },
+    fileFilter: function(req, file, cb) {
+        checkFileType(file, cb);
+    }
+
+}).single('image');
+
+
+function checkFileType(file, cb) {
+    //allowed extentions
+    const filetypes = /jpeg|jpg|png|gif/;
+    //check extentions
+    const extentionName = filetypes.test(path.extname(file.originalname).toLowerCase());
+    //check the  mimetype for image
+    const mimetype = filetypes.test(file.mimetype);
+    if (mimetype && extentionName) {
+        return cb(null, true);
+    } else {
+        return cb('Images only !!')
+    }
+}
+
+function handleProfilePic(req, res) {
+    upload(req, res, (error) => {
+        if (error) {
+            res.render('user-signin-up/sign-up', {
+                msg: error,
+            });
+        } else {
+
+            if (req.file == undefined) {
+                res.render('user-signin-up/sign-up', {
+                    msg: 'Error : No file selected !!',
+                });
+            } else {
+                const image = `uploads/${req.file.fieldname}-${Date.now()}${path.extname(req.file.originalname)}`;
+                const sqlQuery = 'INSERT INTO images (image) VALUES($1) RETURNING id;';
+                const safeValues = [image];
+                client.query(sqlQuery, safeValues).then(() => {
+                    res.render('user-signin-up/sign-up', {
+                        msg: 'file Uploaded ✔️',
+                    });
+                })
+            }
+
+        }
+    });
+}
+
 
 // API home page Routes
 app.post('/homepage',addeventhomepage);
@@ -169,5 +232,16 @@ app.get('/', renderMainPage);
 // Search Results
 app.post('/searches', renderSearchPage);
 // wrong path rout
-app.use('*',handelWrongPath);
+app.use('*', handelWrongPath);
+// handle upload profile image
+app.post('/upload', handleProfilePic);
+
+app.get('/sign-up', (req, res) => {
+    res.render('user-signin-up/sign-up')
+  });
+
+app.get('/sign-in',(req,res)=>{
+  res.render("user-signin-up/sign-in");
+  });
+  
 
