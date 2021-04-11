@@ -1,0 +1,24 @@
+<header>
+    <div class="sticky">
+        <div class="nhov">
+        <a href="/" class="active" ><span id="">Event</span> <span id="logospan">full</span></a>
+        </div>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+        <div id="myLinks">
+            <a href="/">Home</a>
+            <a>
+            <form action="/searches" method="POST">
+                <label for="search">Search For Eents</label>
+                <input type="hidden" value="" name="searched">
+            <input type="hidden" value="random" name="sortBy">
+            <input type="hidden" value="US" name="countryCode">
+                <button type="submit">Search</button>
+                </form>
+                </a>
+            <a href="/showlist">Your list</a>
+            <a href="/aboutus">About</a>
+        </div>
+    </div>
+</header>

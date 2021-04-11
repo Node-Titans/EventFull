@@ -1,0 +1,35 @@
+<main style="margin:0 0 2% 2%;">
+    <section class="search-card">
+    <form action="/searches" method="POST">
+    <fieldset>
+  <legend>
+    <label for="search">Search For Eents</label>
+    <input type="text" name="searched">
+
+<select name="sortBy" id="search-sort">
+  <option value="name,asc">Name Ascending</option>
+  <option value="name,desc">Name descending</option>
+  <option value="relevance,asc">Relevance</option>
+  <option value="distance,asc">Distance</option>
+<option value="date,desc">Date</option>
+<option value="venueName,asc'">Venue</option>
+</select>
+
+<select name="countryCode" id="search-sort">
+  <option value="US">United States Of America</option>
+  <option value="DK">Denmark</option>
+  <option value="FR">France</option>
+  <option value="CA">Canada</option>
+<option value="SE">Sweden</option>
+<option value="MX'">Mexico</option>
+<option value="NO">Norway</option>
+<option value="ES'">Spain</option>
+</select>
+
+    <button type="submit">Search</button>
+    </legend>
+    </fieldset>
+    
+    </form>
+    </section>
+</main>

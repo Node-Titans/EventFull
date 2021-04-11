@@ -1,25 +1,13 @@
+
+### "version": "1.0.0"
+
+
 # EventFull
 
 Do you need one website from which you can view all events by the place and date you want?
 Our website guarantees that you can find the events you want and save your own list of them arranged by date.
 You can also edit your list and delete events that you do not want anymore.
 Also, you can see how many people are interested in each event, which helps you choose.
-
-## Project Plan 
- Project Name :
-
-   - EventFull
-
-Team Name :
-- Node Titans
-
-Team Members : 
-
-- Manar Abdelkarim  - TL
-- Noura Alquran
-- Obada Athamneh
-- Monther Alkhwaldeh
-- Doha Alazzam
 
 
 ### User Stories 
@@ -63,71 +51,29 @@ Team Members :
 -   As a developer I want to apply RESTful architecture .
 <hr>
 
-### Work Flow
 
-  **Standards** 
 
-1.  Style (website colors, font styles): [Obada] / except Categories 
+**What the project will not do:** 
+- My website will never allow the user to add events .
+- My website will never turn into an IOS or Android app.
 
-2.  Branching and Communication  (GitHub/commits):[Manar] 
+**Functional Requirements**
 
-3.  Code standards (ex: each function should have illustrative comments):[Noura , Doha] 
+ ![](./img/user-case.png)
 
-4.  Hierarchy File's tree and organizing: [Monther] 
 
-  **Sub-goals:** 
+- A user can create a profile
+- A user can sign in to his profile
+- A user can search for events 
+- A user can add events to his list
+- A user can delete events from his list
+- A user can view events to details
 
-1.  Wireframe for each page [Noura] 
-
-2.  User stories "in read me "[ Manar] 
-
-3.  Events Database [Manar] 
-
-4.  User Database [Noura] 
-
-5.  Database Diagrams [Monther] 
-
-6.  Extensions (About the team):[Doha] 
-
-7.  Sort search events results [Doha] 
-
-8.  Partial (head , header , footer) [Obada] 
-
-9.  Login/sign up [Noura] 
-
-10.  Main Page and Search [Manar], 
-
-11.  Render user event lists and Details [Monther] 
-
-12.  Delete Events from the list [Obada] 
-
-13.  Stretching Goals: delete events after date expired [Obada] 
-
-14.  Stretching Goals: add the API weather 
-
-15. Stretching Goals: user Profile [Monther] 
-
- **Roles** 
-
-1.  Team Leading and project management [Manar] 
-
-2.  Presentation (Noura) 
-
- **Timeline**
-
- ![](./img/timeline.png)
-
- **The Project Oriented**
-
- ![](./img/theProjectorianted.jpeg)
- **Wire Frame**
-
+**Data Flow**
  ![](./img/wireframe.jpeg)
- **DataBase Diagram**
-
- ![](./img/databaseDiagram.jpg)
 
 
+**Non-Functional Requirements**
 
-
-EVENT_KEY = HybkkamcQAG2qkxKtCkNknuFZvrNBLlx
+- Security: The bcrypt hashing function allows us to build a password security platform that scales with computation power and always hashes every password with a salt. 
+- Flexibility : the menu is shown in every page so the user can navigate easily between pages 
