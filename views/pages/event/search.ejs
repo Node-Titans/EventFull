@@ -17,6 +17,24 @@
   <div class="text">
  <h4 class="index-h4"> Name : <%= el.eventName %></h4>
  <h4>Location :  <%= el.venues %> ,  <%= el.city %>  ,  <%= el.country %> </h4>
+<h4>Start Date :  <%= el.startDate %>  End Date : <%= el.end_date %>  </h4>
+  <!-- <button type="button"><a href="/books/<%=el.id%>">View Details</a> </button>   -->
+  <form action="/searchespage" method="POST">
+    <input type="hidden" value="<%= el.eventId %>" name="eventId">
+    <input type="hidden" value="<%= el.eventName %>" name="eventName">
+    <input type="hidden" value="<%=el.imageUrl%>" name="img">
+    <input type="hidden" value="<%= el.venues %>" name="venues">
+    <input type="hidden" value="<%= el.city %>" name="city">
+    <input type="hidden" value="<%= el.country %>" name="country">
+    <input type="hidden" value="<%= el.countryCode %>" name="countryCode">
+    <input type="hidden" value="<%= el.end_date %>" name="enddate">
+    <input type="hidden" value="<%= el.startDate %>" name="startdate">
+    <input type="hidden" value="<%= el.Description %>" name="description">
+    <input type="hidden" value="<%= el.url %>" name="url">
+    <input type="submit" value="Add this Event">
+</form>
+      <% }); %>
+</ul>
   <button type="button"><a href="/#/<%=el.id%>">View Details</a> </button> 
 </div>
 
