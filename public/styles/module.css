@@ -1,0 +1,13 @@
+.index-img{
+    width: 99%;
+    height: 222px;
+    block-size: border-box;
+}
+
+.index-main {
+    margin: 0 2%;
+}
+
+.index-h4{
+    font-size: x-large;
+}

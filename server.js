@@ -38,41 +38,43 @@ const storage = multer.diskStorage({
     }
 });
 
-const renderSearchResults = (req, res) => {
-    const query = {
-        apikey: process.env.EVENT_KEY,
-        keyword: req.body.searched,
-        sort: req.body.sortBy,
-        countryCode: req.body.countryCode
-    }
-    const url = 'https://app.ticketmaster.com/discovery/v2/events?&locale=*';
+const renderSearchPage = (req, res) => {
+  const query = {
+    apikey : process.env.EVENT_KEY ,
+    keyword : req.body.searched,
+    sort: req.body.sortBy ,
+    countryCode :  req.body.countryCode
+  }
+  const url =  'https://app.ticketmaster.com/discovery/v2/events?&locale=*';
 
-    superagent.get(url).query(query).then((data) => {
-        const eventData = data.body._embedded.events;
-        // eventData = [eventData];
-        const event = eventData.map(event => {
-            return new Event(event);
-        });
-        // console.log('🚀 event', event);
-        res.render('pages/event/search', { events: event });
-    }).catch((err) => errorHandler(err, req, res));
+  superagent.get(url).query(query).then((data) => {
+    const eventData = data.body._embedded.events;
+    // eventData = [eventData];
+    const event = eventData.map(event => {
+      return new Event(event);
+    });
+    // console.log('🚀 event', event);
+    res.render('pages/event/search', { events: event });
+  }).catch((err) => errorHandler(err, req, res));
 };
 
 
 
 
-const renderSearchPage = (req, res) => {
-    const url = 'https://app.ticketmaster.com/discovery/v2/events?apikey=HybkkamcQAG2qkxKtCkNknuFZvrNBLlx&locale=*&sort=random';
+const renderMainPage = (req, res) => {
+  // the country should be added to find the venous
+  const url = 'https://app.ticketmaster.com/discovery/v2/events?apikey=HybkkamcQAG2qkxKtCkNknuFZvrNBLlx&locale=*&sort=random&countryCode=US';
 
-    superagent.get(url).then((data) => {
-        let eventData = data.body._embedded.events;
-        // eventData = [eventData];
-        const event = eventData.map(event => {
-            return new Event(event);
-        });
-        // console.log('🚀 event', event);
-        res.render('pages/event/index', { events: event });
-    }).catch((err) => errorHandler(err, req, res));
+  superagent.get(url).then((data) => {
+    let eventData = data.body._embedded.events;
+    // console.log("🚀 ~ file: server.js ~ line 59 ~ superagent.get ~ eventData", eventData)
+    // eventData = [eventData];
+    const event = eventData.map(event => {
+      return new Event(event);
+    });
+    console.log('🚀 event', event);
+    res.render('pages/event/index', { events: event });
+  }).catch((err) => errorHandler(err, req, res));
 };
 
 
@@ -105,7 +107,8 @@ client.connect().then(() => {
 });
 
 // Event Constructor
-function Event(data) {
+class Event {
+  constructor(data) {
 
     this.eventId = data.id;
     this.country = data._embedded.venues[0].country.name;
@@ -118,9 +121,9 @@ function Event(data) {
     this.startDate = data.sales.public.startDateTime;
     this.Description = data.info;
     this.url = data.url;
+  }
+
 }
-
-
 //init upload 
 const upload = multer({
     storage: storage,
@@ -175,9 +178,9 @@ function handleProfilePic(req, res) {
 
 
 // API home page Routes
-app.get('/', renderSearchPage);
+app.get('/', renderMainPage);
 // Search Results
-app.post('/searches', renderSearchResults);
+app.post('/searches', renderSearchPage);
 // wrong path rout
 app.use('*', handelWrongPath);
 // handle upload profile image
@@ -187,8 +190,8 @@ app.get('/sign-up', (req, res) => {
     res.render('user-signin-up/sign-up')
   });
 
-app.get('/sign-in',((req,res)=>{
+app.get('/sign-in',(req,res)=>{
   res.render("user-signin-up/sign-in");
-  }))
+  });
   
 
