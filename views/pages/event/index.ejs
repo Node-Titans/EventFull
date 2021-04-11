@@ -6,14 +6,14 @@
     <body>
 <%- include('../layout/header') %>
 
- <main>
-<br><br><br><br><br><br><br><br>
-<%- include('./search_form') %>
-     
-<ul>
+ <main class="grid index-main">
+
+
  <% events.forEach(el => { %>
- <h4> Name : <%= el.eventName %></h4>
- <img src="<%=el.imageUrl%>" alt="<%= el.eventName %>">
+<article>
+ <img class="index-img" src="<%=el.imageUrl%>" alt="<%= el.eventName %>">
+  <div class="text">
+ <h4 class="index-h4"> Name : <%= el.eventName %></h4>
  <h4>Location :  <%= el.venues %> ,  <%= el.city %>  ,  <%= el.country %> </h4>
     <form action="/homepage" method="POST">
         <input type="hidden" value="<%= el.eventId %>" name="eventId">
@@ -25,15 +25,19 @@
         <input type="hidden" value="<%= el.countryCode %>" name="countryCode">
         <input type="hidden" value="<%= el.end_date %>" name="enddate">
         <input type="hidden" value="<%= el.startDate %>" name="startdate">
-        <input type="hidden" value="<%= el.Description %>" name="description">
+        <input type="hidden" value="<%= el.Description %>" name="Description">
         <input type="hidden" value="<%= el.url %>" name="url">
-        <input type="submit" value="Add this Event">
+        <input class="btn1"  type="submit" value="Add this Event">
 
     </form>
   <!-- <button type="button"><a href="/books/<%=el.id%>">View Details</a> </button>  -->
-      <% }); %>
-</ul>
+  <!-- <button type="button"><a href="/#/<%=el.id%>">View Details</a> </button>  -->
+</div>
 
+</article>
+      <% }); %>
+
+ 
 <%  if (Object.keys(events).length === 0) { %>
  <h3>Sorry , No result was found</h3>
 
@@ -43,3 +47,6 @@
  <script src="js/app.js"></script>
     </body>
 </html>
+
+
+

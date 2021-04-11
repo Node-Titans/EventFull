@@ -28,7 +28,7 @@ const client =  new pg.Client({
 });
 
 
-const renderSearchResults = (req, res) => {
+const renderSearchPage = (req, res) => {
   const query = {
     apikey : process.env.EVENT_KEY ,
     keyword : req.body.searched,
@@ -61,7 +61,7 @@ function addeventhomepage(req,res){
   const Description=req.body.Description;
   const url=req.body.url;
   const safeValues=[eventId,eventName,country,countryCode,city,venues,img,enddate,startdate,Description,url];
-  const sqlQuery='INSERT INTO events (event_id,event_name,country,countryCode,city,venues,image_url,end_date,start_date,Description,url) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) ON CONFLICT (event_id) DO NOTHING;'
+  const sqlQuery='INSERT INTO events (event_id,event_name,country,countryCode,city,venues,image_url,end_date,start_date,description,url) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) ON CONFLICT (event_id) DO NOTHING;'
   client.query(sqlQuery,safeValues).then(()=>{
     res.redirect('/');
   }).catch((err) => errorHandler(err, req, res));
@@ -85,16 +85,18 @@ function addeventhomepage(req,res){
 //   }).catch((err) => errorHandler(err, req, res));
 // }
 
-const renderSearchPage = (req, res) => {
+const renderMainPage = (req, res) => {
+  // the country should be added to find the venous
   const url = 'https://app.ticketmaster.com/discovery/v2/events?apikey=HybkkamcQAG2qkxKtCkNknuFZvrNBLlx&locale=*&sort=random&countryCode=US';
 
   superagent.get(url).then((data) => {
     let eventData = data.body._embedded.events;
+    // console.log("🚀 ~ file: server.js ~ line 59 ~ superagent.get ~ eventData", eventData)
     // eventData = [eventData];
     const event = eventData.map(event => {
       return new Event(event);
     });
-    // console.log('🚀 event', event);
+    console.log('🚀 event', event);
     res.render('pages/event/index', { events: event });
   }).catch((err) => errorHandler(err, req, res));
 };
@@ -158,13 +160,12 @@ function Event (data) {
 }
 
 // API home page Routes
+app.post('/homepage',addeventhomepage);
 app.get('/user',renderyourlist);
 app.get('/user/:id',eventDetails);
-app.get('/', renderSearchPage);
-app.post('/homepage',addeventhomepage);
-// app.post('/searchespage',addeventsearch);
+app.get('/', renderMainPage);
 // Search Results
-app.post('/searches', renderSearchResults);
+app.post('/searches', renderSearchPage);
 // wrong path rout
 app.use('*',handelWrongPath);
 
