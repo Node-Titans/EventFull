@@ -120,14 +120,6 @@ function Event(data) {
     this.url = data.url;
 }
 
-// API home page Routes
-app.get('/', renderSearchPage);
-// Search Results
-app.post('/searches', renderSearchResults);
-// wrong path rout
-app.use('*', handelWrongPath);
-
-
 
 //init upload 
 const upload = multer({
@@ -153,7 +145,6 @@ function checkFileType(file, cb) {
         return cb('Images only !!')
     }
 }
-app.post('/upload', handleProfilePic);
 
 function handleProfilePic(req, res) {
     upload(req, res, (error) => {
@@ -181,3 +172,16 @@ function handleProfilePic(req, res) {
         }
     });
 }
+
+
+// API home page Routes
+app.get('/', renderSearchPage);
+// Search Results
+app.post('/searches', renderSearchResults);
+// wrong path rout
+app.use('*', handelWrongPath);
+// handle upload profile image
+app.post('/upload', handleProfilePic);
+
+
+
