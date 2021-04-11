@@ -43,7 +43,7 @@ const renderSearchResults = (req, res) => {
     const event = eventData.map(event => {
       return new Event(event);
     });
-    console.log('🚀 event', event);
+    // console.log('🚀 event', event);
     res.render('pages/event/search', { events: event });
   }).catch((err) => errorHandler(err, req, res));
 };
@@ -60,7 +60,7 @@ const renderSearchPage = (req, res) => {
     const event = eventData.map(event => {
       return new Event(event);
     });
-    console.log('🚀 event', event);
+    // console.log('🚀 event', event);
     res.render('pages/event/index', { events: event });
   }).catch((err) => errorHandler(err, req, res));
 };
