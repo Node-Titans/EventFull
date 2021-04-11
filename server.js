@@ -183,5 +183,12 @@ app.use('*', handelWrongPath);
 // handle upload profile image
 app.post('/upload', handleProfilePic);
 
+app.get('/sign-up', (req, res) => {
+    res.render('user-signin-up/sign-up')
+  });
 
+app.get('/sign-in',((req,res)=>{
+  res.render("user-signin-up/sign-in");
+  }))
+  
 
