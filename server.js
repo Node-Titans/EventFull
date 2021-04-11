@@ -76,24 +76,25 @@ function addeventhomepage(req,res){
     res.redirect('/');
   }).catch((err) => errorHandler(err, req, res));
 }
-// function addeventsearch(req,res){
-//   const eventId=req.body.eventId;
-//   const eventName=req.body.eventName;
-//   const img=req.body.img;
-//   const venues=req.body.venues;
-//   const country=req.body.country;
-//   const countryCode=req.body.countryCode;
-//   const city=req.body.city;
-//   const enddate=req.body.enddate;
-//   const startdate=req.body.startdate;
-//   const Description=req.body.Description;
-//   const url=req.body.url;
-//   const safeValues=[eventId,eventName,country,countryCode,city,venues,img,enddate,startdate,Description,url];
-//   const sqlQuery='INSERT INTO events (event_id,event_name,country,countryCode,city,venues,image_url,end_date,start_date,Description,url) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) ON CONFLICT (event_id) DO NOTHING;'
-//   client.query(sqlQuery,safeValues).then(()=>{
-//     res.redirect('pages/event/search');
-//   }).catch((err) => errorHandler(err, req, res));
-// }
+
+function addeventsearch(req,res){
+  const eventId=req.body.eventId;
+  const eventName=req.body.eventName;
+  const img=req.body.img;
+  const venues=req.body.venues;
+  const country=req.body.country;
+  const countryCode=req.body.countryCode;
+  const city=req.body.city;
+  const enddate=req.body.enddate;
+  const startdate=req.body.startdate;
+  const Description=req.body.Description;
+  const url=req.body.url;
+  const safeValues=[eventId,eventName,country,countryCode,city,venues,img,enddate,startdate,Description,url];
+  const sqlQuery='INSERT INTO events (event_id,event_name,country,countryCode,city,venues,image_url,end_date,start_date,description,url) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) ON CONFLICT (event_id) DO NOTHING;';
+  client.query(sqlQuery,safeValues).then(()=>{
+    res.redirect('/');
+  }).catch((err) => errorHandler(err, req, res));
+}
 
 const renderMainPage = (req, res) => {
   // the country should be added to find the venous
@@ -140,7 +141,7 @@ const handelWrongPath = (err, req, res) => {
 // ERROR HANDLER
 const errorHandler = (err, req, res) => {
   console.log('err', err);
-  res.render('pages/error', { err: err });
+  res.status(500).render('pages/error', { err: err });
 };
 
 // database connection
@@ -228,6 +229,7 @@ function handleProfilePic(req, res) {
 
 
 app.post('/homepage',addeventhomepage);
+app.post('/searchespage',addeventsearch)
 app.get('/user',renderyourlist);
 app.get('/user/:id',eventDetails);
 app.get('/', renderMainPage);
