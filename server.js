@@ -28,7 +28,7 @@ const client =  new pg.Client({
 });
 
 
-const renderSearchResults = (req, res) => {
+const renderSearchPage = (req, res) => {
   const query = {
     apikey : process.env.EVENT_KEY ,
     keyword : req.body.searched,
@@ -51,16 +51,18 @@ const renderSearchResults = (req, res) => {
 
 
 
-const renderSearchPage = (req, res) => {
-  const url = 'https://app.ticketmaster.com/discovery/v2/events?apikey=HybkkamcQAG2qkxKtCkNknuFZvrNBLlx&locale=*&sort=random';
+const renderMainPage = (req, res) => {
+  // the country should be added to find the venous
+  const url = 'https://app.ticketmaster.com/discovery/v2/events?apikey=HybkkamcQAG2qkxKtCkNknuFZvrNBLlx&locale=*&sort=random&countryCode=US';
 
   superagent.get(url).then((data) => {
     let eventData = data.body._embedded.events;
+    // console.log("🚀 ~ file: server.js ~ line 59 ~ superagent.get ~ eventData", eventData)
     // eventData = [eventData];
     const event = eventData.map(event => {
       return new Event(event);
     });
-    // console.log('🚀 event', event);
+    console.log('🚀 event', event);
     res.render('pages/event/index', { events: event });
   }).catch((err) => errorHandler(err, req, res));
 };
@@ -111,9 +113,9 @@ function Event (data) {
 }
 
 // API home page Routes
-app.get('/', renderSearchPage);
+app.get('/', renderMainPage);
 // Search Results
-app.post('/searches', renderSearchResults);
+app.post('/searches', renderSearchPage);
 // wrong path rout
 app.use('*',handelWrongPath);
 

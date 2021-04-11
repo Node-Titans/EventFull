@@ -1,31 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title></title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="css/style.css" rel="stylesheet">
-  </head>
+<%- include('../layout/head') %>
+
+    <title>Search</title>
+  
   <body>
+  <%- include('../layout/header') %>
+
   <%- include('./search_form') %>
+ <main class="grid index-main">
 
- <ul>
-
-<%  if (Object.keys(events).length > 0) { %>
 
  <% events.forEach(el => { %>
- <h4> Name : <%= el.eventName %></h4>
- <img src="<%=el.imageUrl%>" alt="<%= el.eventName %>">
+<article>
+ <img class="index-img" src="<%=el.imageUrl%>" alt="<%= el.eventName %>">
+  <div class="text">
+ <h4 class="index-h4"> Name : <%= el.eventName %></h4>
  <h4>Location :  <%= el.venues %> ,  <%= el.city %>  ,  <%= el.country %> </h4>
-<h4>Start Date :  <%= el.startDate %>  End Date : <%= el.end_date %>  </h4>
-  <button type="button"><a href="/books/<%=el.id%>">View Details</a> </button> 
+  <button type="button"><a href="/#/<%=el.id%>">View Details</a> </button> 
+</div>
+
+</article>
       <% }); %>
-</ul>
 
-
-<% } else { %>
+ 
+<%  if (Object.keys(events).length === 0) { %>
  <h3>Sorry , No result was found</h3>
 
  <% } %>
+ </main>
+     <%- include('../layout/footer') %>
+</main>
   </body>
 </html>
