@@ -15,8 +15,22 @@
  <h4> Name : <%= el.eventName %></h4>
  <img src="<%=el.imageUrl%>" alt="<%= el.eventName %>">
  <h4>Location :  <%= el.venues %> ,  <%= el.city %>  ,  <%= el.country %> </h4>
+    <form action="/homepage" method="POST">
+        <input type="hidden" value="<%= el.eventId %>" name="eventId">
+        <input type="hidden" value="<%= el.eventName %>" name="eventName">
+        <input type="hidden" value="<%=el.imageUrl%>" name="img">
+        <input type="hidden" value="<%= el.venues %>" name="venues">
+        <input type="hidden" value="<%= el.city %>" name="city">
+        <input type="hidden" value="<%= el.country %>" name="country">
+        <input type="hidden" value="<%= el.countryCode %>" name="countryCode">
+        <input type="hidden" value="<%= el.end_date %>" name="enddate">
+        <input type="hidden" value="<%= el.startDate %>" name="startdate">
+        <input type="hidden" value="<%= el.Description %>" name="description">
+        <input type="hidden" value="<%= el.url %>" name="url">
+        <input type="submit" value="Add this Event">
 
-  <button type="button"><a href="/books/<%=el.id%>">View Details</a> </button> 
+    </form>
+  <!-- <button type="button"><a href="/books/<%=el.id%>">View Details</a> </button>  -->
       <% }); %>
 </ul>
 
