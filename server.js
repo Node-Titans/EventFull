@@ -31,9 +31,9 @@ const client =  new pg.Client({
 const renderSearchResults = (req, res) => {
   const query = {
     apikey : process.env.EVENT_KEY ,
-    keyword : req.body.searched,
-    sort: req.body.sortBy ,
-    countryCode :  req.body.countryCode
+    keyword : req? req.body.searched:'',
+    sort: req ?  req.body.sortBy:'random',
+    countryCode :  req ? req.body.countryCode: 'US'
   }
   const url =  'https://app.ticketmaster.com/discovery/v2/events?&locale=*';
 
@@ -52,8 +52,8 @@ const renderSearchResults = (req, res) => {
 
 
 const renderSearchPage = (req, res) => {
-  const url = 'https://app.ticketmaster.com/discovery/v2/events?apikey=HybkkamcQAG2qkxKtCkNknuFZvrNBLlx&locale=*&sort=random';
-
+  // const url = 'https://app.ticketmaster.com/discovery/v2/events?apikey=HybkkamcQAG2qkxKtCkNknuFZvrNBLlx&locale=*&sort=random';
+  const url = 'https://app.ticketmaster.com/discovery/v2/events?apikey=HybkkamcQAG2qkxKtCkNknuFZvrNBLlx&locale=*&sort=random&countryCode=US';
   superagent.get(url).then((data) => {
     let eventData = data.body._embedded.events;
     // eventData = [eventData];
