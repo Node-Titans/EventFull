@@ -8,6 +8,7 @@ const pg = require('pg');
 const methodOverride = require('method-override');
 const app = express();
 
+
 // Setup environment
 const PORT = process.env.PORT || 3030;
 const DATABASE_URL = process.env.DATABASE_URL;
@@ -18,7 +19,9 @@ app.use(methodOverride('_method'));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
-
+app.use(express.json());
+//  app.use(express.static('./public/styles'));
+app.use(express.static('./public/js'));
 // database Setup
 const client =  new pg.Client({
   connectionString: DATABASE_URL,
@@ -40,7 +43,7 @@ const renderSearchResults = (req, res) => {
     const event = eventData.map(event => {
       return new Event(event);
     });
-    console.log('🚀 event', event);
+    // console.log('🚀 event', event);
     res.render('pages/event/search', { events: event });
   }).catch((err) => errorHandler(err, req, res));
 };
@@ -57,7 +60,7 @@ const renderSearchPage = (req, res) => {
     const event = eventData.map(event => {
       return new Event(event);
     });
-    console.log('🚀 event', event);
+    // console.log('🚀 event', event);
     res.render('pages/event/index', { events: event });
   }).catch((err) => errorHandler(err, req, res));
 };
