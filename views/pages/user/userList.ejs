@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../layout/head') %>
+
+</head>
+<body>
+    <%- include('../layout/header') %>
+    <main class="main1">
+    <section class="list-container">
+        <% searchResults.forEach(element => { %>
+            <section class="list">
+                <h4><%= element.event_name %></h4>
+            <img src="<%= element.image_url %>" alt="" class="img" >
+            <h4>location : <%= element.venues %> ,  <%= element.city %>  ,  <%= element.country %></h4>
+            <h4>Start Date :  <%= element.startDate %>  End Date : <%= element.end_date %>  </h4>
+            <br>
+            <section>
+            <button class="btn" type="button"><a href="/user/<%=element.id%>">View Details</a> </button> 
+        </section>
+        </section>
+        <% }); %>
+</section>
+</main>
+    <%- include('../layout/footer') %>
+</body>
+</html>
