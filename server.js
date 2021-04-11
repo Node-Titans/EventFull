@@ -144,19 +144,21 @@ client.connect().then(() => {
 });
 
 // Event Constructor
-function Event (data) {
+class Event {
+  constructor(data) {
 
-  this.eventId = data.id ;
-  this.country = data._embedded.venues[0].country.name;
-  this.countryCode = data._embedded.venues[0].country.countryCode ;
-  this.eventName = data.name;
-  this.city = data._embedded.venues[0].city.name;
-  this.venues = data._embedded.venues[0].name;
-  this.imageUrl =data.images[0].url;
-  this.end_date = data.sales.public.endDateTime;
-  this.startDate = data.sales.public.startDateTime;
-  this.Description = data.info;
-  this.url = data.url;
+    this.eventId = data.id;
+    this.country = data._embedded.venues[0].country.name;
+    this.countryCode = data._embedded.venues[0].country.countryCode;
+    this.eventName = data.name;
+    this.city = data._embedded.venues[0].city.name;
+    this.venues = data._embedded.venues[0].name;
+    this.imageUrl = data.images[0].url;
+    this.end_date = data.sales.public.endDateTime;
+    this.startDate = data.sales.public.startDateTime;
+    this.Description = data.info;
+    this.url = data.url;
+  }
 }
 
 // API home page Routes
