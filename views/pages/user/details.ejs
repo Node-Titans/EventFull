@@ -7,6 +7,9 @@
     <%- include('../layout/header') %>
     <br><br><br><br>
     <section class="event-details-c">
+   
+        
+    
         <section class="event-details-l">
             <img src="<%= results[0].image_url %>" alt="" width="400" height="400">
             <h1 class="detail-h1"><%= results[0].event_name %></h1>
@@ -18,10 +21,14 @@
             <p class="detail-p"> about Event : <%= results[0].description%></p>
             <a href="<%= results[0].url%> "> The url for event </a>  
             <br> <br>
-            <input class="btn" type="submit" value="Delet This Event">
+               <form action="/event/<%=  results[0].event_id %>?_method=DELETE" method='POST'>
+            <button class="btn" type="submit">Delet This Event</button>
+        </form>
         </section>
+       
     </section>
     <%- include('../layout/footer') %>
+        <script src="js/app.js"></script>
 
 </body>
 </html>
