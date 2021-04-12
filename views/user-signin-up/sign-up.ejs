@@ -20,9 +20,12 @@
                 <input class="input" type="submit" value="upload">
             </fieldset>
         </form>
-        <p>
-            <%= typeof msg != 'undefined' ? msg :'' %>
-        </p>
+        <p><%= typeof msg != 'undefined' ? msg :'' %> </p>
+        <p><%= typeof massage != 'undefined' ? massage :'' %> </p>
+        <p><%= typeof error != 'undefined' ? error :'' %> </p>
+        <p><%= typeof error4 != 'undefined' ? error4 :'' %> </p>
+
+        
         <form action="/check" method="POST">
             <fieldset>
                 <label for="name">Name:</label>

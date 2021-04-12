@@ -12,7 +12,12 @@
     <div id="login" class="animated bounce">
         <h2>login</h2>
         <p>Welcome back  👋</p>
-        <form action=""  method="GET">
+        
+        <p><%= typeof error!= 'undefined' ? error:'' %> </p>
+        <p><%= typeof error2 != 'undefined' ? error2 :'' %> </p>
+        <p><%= typeof error3 != 'undefined' ? error3 :'' %> </p>
+
+        <form action="/login"  method="POST">
             <div class="input">
                 <label for="name" class="entypo-user"></label>
                 <input type="text" name="username" id="name" placeholder="username" />
