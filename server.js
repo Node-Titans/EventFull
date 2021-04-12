@@ -96,10 +96,20 @@ function addeventsearch(req,res){
   const startdate=req.body.startdate;
   const Description=req.body.Description;
   const url=req.body.url;
-  const safeValues=[eventId,eventName,country,countryCode,city,venues,img,enddate,startdate,Description,url];
-  const sqlQuery='INSERT INTO events (event_id,event_name,country,countryCode,city,venues,image_url,end_date,start_date,description,url) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) ON CONFLICT (event_id) DO NOTHING;';
-  client.query(sqlQuery,safeValues).then(()=>{
-    res.redirect('/');
+  const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
+  client.query(idq).then((data)=>{
+    const iduser=data.rows[0].loginid;
+    const safeValues=[eventId,eventName,country,countryCode,city,venues,img,enddate,startdate,Description,url];
+    const safevalues2=[iduser,eventId];
+    const sqlQuery='INSERT INTO events (event_id,event_name,country,countryCode,city,venues,image_url,end_date,start_date,description,url) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) ON CONFLICT (event_id) DO NOTHING RETURNING event_id;';
+    client.query(sqlQuery,safeValues).then(()=>{
+      const idinsert=`INSERT INTO users_events (user_id,event_id) VALUES ($1 , $2);`;
+      console.log('login id 😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎',iduser);
+      console.log('login id 😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎',eventId);
+      client.query(idinsert,safevalues2).then(()=>{
+        res.redirect('/');
+      });
+    });
   }).catch((err) => errorHandler(err, req, res));
 }
 
@@ -114,20 +124,20 @@ const renderMainPage = (req, res) => {
       return new Event(event);
     });
     res.render('pages/event/index', { events: event });
-
-
-
-
   }).catch((err) => errorHandler(err, req, res));
 };
 
 function renderyourlist(req,res){
-  const sql='SELECT * FROM events;';
-  client.query(sql).then((results)=>{
-    res.render('pages/user/userList',{searchResults:results.rows})
+  // const userlogin='SELECT * FROM uidlogin ORDER BY ID DESC LIMIT 1;';
+  const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
+  client.query(idq).then((data)=>{
+    const iduser=data.rows[0].loginid;
+    const sql=`select * from users join users_events on (users.id=users_events.user_id) join events on (events.event_id=users_events.event_id) where users.id=${iduser};`;
+    client.query(sql).then((results)=>{
+      res.render('pages/user/userList',{searchResults:results.rows})
+    });
   }).catch((err) => errorHandler(err, req, res));
 }
-
 function eventDetails(req,res){
   const eventid=req.params.id;
   const sqlQuery='SELECT * FROM events WHERE id=$1';
@@ -302,7 +312,11 @@ async function handleLogin(req, res){
               error2: 'Sorry! your username or password is incorrect❌ ',
             });
           } else if (validPassword) {
+            // console.log('userid',results.rows[0].id);
+            const idquery=`INSERT INTO uidlogin (loginid) VALUES (${results.rows[0].id})`;
+            client.query(idquery);
             res.redirect('/');
+
           } else {
             res.render('pages/user-signin-up/sign-in',{
               error3: 'Sorry! your username or password is incorrect❌ ',
@@ -347,7 +361,7 @@ app.get('/sign-up', (req, res) => {
   res.render('pages/user-signin-up/sign-up')
 });
 app.get('/about', (req, res) => {
-  res.render('pages/aboutUs')
+  res.render('pages/aboutUs/aboutUs')
 });
 
 app.get('/sign-in',(req,res)=>{
