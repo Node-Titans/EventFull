@@ -11,7 +11,7 @@ const path = require('path');
 const multer = require('multer'); // to upload image
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
-const  passport = require('passport');
+const passport = require('passport');
 
 
 // Setup environment
@@ -232,48 +232,48 @@ function handleProfilePic(req, res) {
 
 async function registerNewUser(req, res){
   try {
-    const { username, age , email, password, country , phoneNumber  } = req.body;
-    const user = "SELECT * FROM users WHERE username=$1;";
+    const { username, age , email, password, country , phoneNumber } = req.body;
+    const user = 'SELECT * FROM users WHERE username=$1;';
     const safeValue = [username]
     //check if username already exists
     client.query(user, safeValue).then(async(results) => {
-    if (results.rows.length !== 0) {
-      res.render('pages/user-signin-up/sign-up',{
-        error: "Sorry! An account with that username already exists!❌",
-      });
-    }
-    else {
+      if (results.rows.length !== 0) {
+        res.render('pages/user-signin-up/sign-up',{
+          error: 'Sorry! An account with that username already exists!❌',
+        });
+      }
+      else {
       //encrypt the password before saving it in the database
-      bcrypt.hash(password, 10, async (error, hashedPassword) => {
-        if (error) {
-          res.send({
-            error: error.message,
-          });
-        } else {
-          const newUser = "INSERT INTO users (username, age , email, password, country , phoneNumber) VALUES($1, $2, $3, $4, $5,$6) RETURNING *";
-          const safeValues= [username, age , email,hashedPassword, country , phoneNumber];
-          client.query(newUser, safeValues).then((results) => {
-           res.render('pages/user-signin-up/sign-up',{
-            massage :'Account created successfully!✔️' ,  
+        bcrypt.hash(password, 10, async (error, hashedPassword) => {
+          if (error) {
+            res.send({
+              error: error.message,
             });
-          
-          });
-        }
+          } else {
+            const newUser = 'INSERT INTO users (username, age , email, password, country , phoneNumber) VALUES($1, $2, $3, $4, $5,$6) RETURNING *';
+            const safeValues= [username, age , email,hashedPassword, country , phoneNumber];
+            client.query(newUser, safeValues).then((results) => {
+              res.render('pages/user-signin-up/sign-up',{
+                massage :'Account created successfully!✔️' ,
+              });
+
+            });
+          }
         })
       }
-   })
-     const usermail = "SELECT * FROM users WHERE email=$1;";
+    })
+    const usermail = 'SELECT * FROM users WHERE email=$1;';
     const safeValuemail = [email]
     //check if email already exists
-      client.query(usermail, safeValuemail).then(async(results) => {
-    if (results.rows.length !== 0) {
-      res.render('pages/user-signin-up/sign-up',{
-        error4: "Sorry! An account with that email already exists!❌",
-      });
-    
-    } 
-  })
-}
+    client.query(usermail, safeValuemail).then(async(results) => {
+      if (results.rows.length !== 0) {
+        res.render('pages/user-signin-up/sign-up',{
+          error4: 'Sorry! An account with that email already exists!❌',
+        });
+
+      }
+    })
+  }
   catch (error) {
     res.send({
       error: error.message,
@@ -282,47 +282,46 @@ async function registerNewUser(req, res){
 
 
 async function handleLogin(req, res){
-    try {
-      const {username, password } = req.body;
-      const user ="SELECT * FROM users WHERE username=$1";
-      const safeValue=[username];
-      client.query(user, safeValue).then(async(results) => {
+  try {
+    const {username, password } = req.body;
+    const user ='SELECT * FROM users WHERE username=$1';
+    const safeValue=[username];
+    client.query(user, safeValue).then(async(results) => {
       if (results.rows.length === 0) {
         res.render('pages/user-signin-up/sign-in',{
-          error: "Sorry! An account with that username doesn't exist!❌",
+          error: 'Sorry! An account with that username doesn\'t exist!❌',
         });
       } else {
         //check if the password entered matches the one in the database
         bcrypt.compare(password, results.rows[0].password, (err, validPassword) => {
           if (err) {
             res.render('pages/user-signin-up/sign-in',{
-              error2: "Sorry! your username or password is incorrect❌ ",
+              error2: 'Sorry! your username or password is incorrect❌ ',
             });
           } else if (validPassword) {
             res.redirect('/');
           } else {
             res.render('pages/user-signin-up/sign-in',{
-              error3: "Sorry! your username or password is incorrect❌ ",
+              error3: 'Sorry! your username or password is incorrect❌ ',
             });
           }
         });
       }
-      })
-    } catch (error) {
-      res.send({
-        error: err.message,
-      });
-    }}
-  
+    })
+  } catch (err) {
+    res.send({
+      error: err.message,
+    });
+  }}
 
 
-   function handleLogout(req, res) {
-      req.session.destroy(() => {
-       req.logout();
-       res.redirect('/login'); 
-      });
- }
 
+function handleLogout( req, res) {
+  delete req.session;
+  res.render('pages/user-signin-up/sign-in');// will always fire after session is destroyed
+
+
+}
 
 // API home page Routes
 
