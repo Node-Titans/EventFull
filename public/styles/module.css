@@ -13,6 +13,8 @@
 }
 
 /* sign in / sign up pages*/
+
+
 [class*="entypo-"]:before {
     font-family: 'entypo', sans-serif;
 }
@@ -40,20 +42,21 @@
 
 #login {
     width: 400px;
-    height: 270px;
-    background:rgb(179, 243, 83);
+    height:320px;
+    background:#e0a904;
     margin: auto;
-    margin-top: 150px;
-    padding-top: 30px;
+    margin-top: 160px;
+    padding-top: 25px;
     border-radius: 5px;
     border: 1px solid rgba(112, 108, 108, 0.4);
     box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.2), inset -5px -5px 15px rgba(255, 255, 255, 0.25);
     box-sizing: border-box;
+    
 }
 #Sign-up {
     width: 700px;
     height:fit-content;
-    background:rgb(179, 243, 83);
+    background:#e0a904;
     margin: auto;
     margin-top: 20px;
     padding-top: 30px;
@@ -87,7 +90,7 @@
     margin: auto;
     top: -91%;
     width: 54px;
-    height: 273px;
+    height: 320px;
     box-shadow: inset 0px -5px 5px rgba(0, 0, 0, 0.25);
     background-color: #fcf6f6;
     background-repeat: repeat-y;
