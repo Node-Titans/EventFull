@@ -57,12 +57,15 @@ const renderSearchPage = (req, res) => {
     const event = eventData.map(event => {
       return new Event(event);
     });
-    // console.log('🚀 event', event);
+      // console.log('🚀 event', event);
     res.render('pages/event/search', { events: event });
-  }).catch((err) => errorHandler(err, req, res));
-};
 
-function addeventhomepage(req,res){
+  }).catch((err) => {
+    res.render('pages/event/search', { events: 0 });
+  });
+}
+
+function addEventHomePage(req,res){
   const eventId=req.body.eventId;
   const eventName=req.body.eventName;
   const img=req.body.img;
@@ -81,7 +84,7 @@ function addeventhomepage(req,res){
   }).catch((err) => errorHandler(err, req, res));
 }
 
-function addeventsearch(req,res){
+function addEventSearch(req,res){
   const eventId=req.body.eventId;
   const eventName=req.body.eventName;
   const img=req.body.img;
@@ -100,9 +103,7 @@ function addeventsearch(req,res){
     const safevalues2=[iduser,eventId];
     const sqlQuery='INSERT INTO events (event_id,event_name,country,countryCode,city,venues,image_url,end_date,start_date,description,url) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) ON CONFLICT (event_id) DO NOTHING RETURNING event_id;';
     client.query(sqlQuery,safeValues).then(()=>{
-      const idinsert=`INSERT INTO users_events (user_id,event_id) VALUES ($1 , $2);`;
-      console.log('login id 😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎',iduser);
-      console.log('login id 😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎',eventId);
+      const idinsert=`INSERT INTO users_events (user_id,event_id) VALUES ($1 , $2) ON CONFLICT (user_id,event_id) DO NOTHING;`;
       client.query(idinsert,safevalues2).then(()=>{
         res.redirect('/');
       });
@@ -112,7 +113,7 @@ function addeventsearch(req,res){
 
 const renderMainPage = (req, res) => {
   // the country should be added to find the venous
-  const url = 'https://app.ticketmaster.com/discovery/v2/events?apikey=HybkkamcQAG2qkxKtCkNknuFZvrNBLlx&locale=*&sort=random&countryCode=US';
+  const url = 'https://app.ticketmaster.com/discovery/v2/events?apikey=HybkkamcQAG2qkxKtCkNknuFZvrNBLlx&locale=*&sort=random&countryCode=US&page=2';
 
   superagent.get(url).then((data) => {
 
@@ -124,7 +125,7 @@ const renderMainPage = (req, res) => {
   }).catch((err) => errorHandler(err, req, res));
 };
 
-function renderyourlist(req,res){
+function renderYourList(req,res){
   // const userlogin='SELECT * FROM uidlogin ORDER BY ID DESC LIMIT 1;';
   const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
   client.query(idq).then((data)=>{
@@ -135,7 +136,7 @@ function renderyourlist(req,res){
     });
   }).catch((err) => errorHandler(err, req, res));
 }
-function eventDetails(req,res){
+function renderEventDetails(req,res){
   const eventid=req.params.id;
   const sqlQuery='SELECT * FROM events WHERE id=$1';
   const saveValues=[eventid];
@@ -181,9 +182,9 @@ class Event {
     this.city = data._embedded.venues[0].city.name;
     this.venues = data._embedded.venues[0].name;
     this.imageUrl = data.images[0].url;
-    this.end_date = data.sales.public.endDateTime;
-    this.startDate = data.sales.public.startDateTime;
-    this.Description = data.info;
+    this.end_date = data.sales.public.endDateTime ? data.sales.public.endDateTime : '2021-04-25';
+    this.startDate = data.sales.public.startDateTime ? data.sales.public.startDateTime : '2021-04-25';
+    this.Description = data.info ? data.info : 'no description available';
     this.url = data.url;
   }
 
@@ -337,13 +338,36 @@ function handleLogout( req, res) {
 
 }
 
+
+
+function deleteEvent(req,res) {
+  const eventId = req.params.id ;
+  const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
+  console.log('eventId 😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎' , eventId);
+
+
+  client.query(idq).then((data)=>{
+    console.log('I am here 😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎');
+
+    const iduser=data.rows[0].loginid ;
+    console.log(' iduser 😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎',iduser);
+
+    const deleteQuery=` delete from users_events where event_id=$1 AND user_id=$2;`;
+    const into = [eventId , iduser];
+    client.query(deleteQuery, into).then(() =>{
+      res.redirect('/user');
+    });
+  })
+
+}
+
 // API home page Routes
 
 
-app.post('/homepage',addeventhomepage);
-app.post('/searchespage',addeventsearch)
-app.get('/user',renderyourlist);
-app.get('/user/:id',eventDetails);
+app.post('/homepage',addEventHomePage);
+app.post('/searchespage',addEventSearch)
+app.get('/user',renderYourList);
+app.get('/user/:id',renderEventDetails);
 app.get('/', renderMainPage);
 // Search Results
 app.post('/searches', renderSearchPage);
@@ -351,20 +375,23 @@ app.post('/check',urlencodedParser,registerNewUser);
 app.get('/logout',handleLogout);
 app.post('/login',urlencodedParser,handleLogin);
 
-// wrong path rout
+
 // handle upload profile image
 app.post('/upload', handleProfilePic);
 app.get('/sign-up', (req, res) => {
+  // sign up page
   res.render('pages/user-signin-up/sign-up')
 });
 app.get('/about', (req, res) => {
   res.render('pages/aboutUs/aboutUs')
 });
-
+// sign in page
 app.get('/sign-in',(req,res)=>{
-  // res.render('pages/user-signin-up/sign-in');
   res.render('pages/user-signin-up/sign-in');
 });
+// Delete Book in The Database
+app.delete('/event/:id', deleteEvent);
+// wrong path rout
 app.use('*', handelWrongPath);
 
 

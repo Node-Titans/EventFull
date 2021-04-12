@@ -6,11 +6,13 @@
   <%- include('../layout/header') %>
   <%- include('./search_form') %>
  <main class="grid index-main">
+ <% if (events.length > 0) { %>
+  
  <% events.forEach(el => { %>
 <article>
  <img class="index-img" src="<%=el.imageUrl%>" alt="<%= el.eventName %>">
   <div class="text">
- <h4 class="index-h4"> Name : <%= el.eventName %></h4>
+ <h4 class="index-h4">  <%= el.eventName %></h4>
  <h4>Location :  <%= el.venues %> ,  <%= el.city %>  ,  <%= el.country %> </h4>
 <h4>Start Date :  <%= el.startdate %>  End Date : <%= el.end_date %>  </h4>
   <!-- <button type="button"><a href="/books/<%=el.id%>">View Details</a> </button>   -->
@@ -33,16 +35,17 @@
 </div>
 </article>
       <% }); %>
+       <% } %>
 
   
 
  
-<%  if (Object.keys(events).length === 0) { %>
- <h3>Sorry , No result was found</h3>
+<%  if (events === 0) { %>
+ <h3 style="margin-bottom: 100%">Sorry , No result was found</h3>
  <% } %>
  </main>
      <%- include('../layout/footer') %>
-</main>
+
 <script src="js/app.js"></script>
   </body>
 </html>
