@@ -101,14 +101,16 @@ const renderMainPage = (req, res) => {
   const url = 'https://app.ticketmaster.com/discovery/v2/events?apikey=HybkkamcQAG2qkxKtCkNknuFZvrNBLlx&locale=*&sort=random&countryCode=US';
 
   superagent.get(url).then((data) => {
+
     let eventData = data.body._embedded.events;
-    // console.log("🚀 ~ file: server.js ~ line 59 ~ superagent.get ~ eventData", eventData)
-    // eventData = [eventData];
     const event = eventData.map(event => {
       return new Event(event);
     });
-    console.log('🚀 event', event);
     res.render('pages/event/index', { events: event });
+
+
+
+
   }).catch((err) => errorHandler(err, req, res));
 };
 
@@ -240,6 +242,9 @@ app.post('/searches', renderSearchPage);
 app.post('/upload', handleProfilePic);
 app.get('/sign-up', (req, res) => {
   res.render('pages/user-signin-up/sign-up')
+});
+app.get('/about', (req, res) => {
+  res.render('pages/aboutUs')
 });
 
 app.get('/sign-in',(req,res)=>{
