@@ -43,7 +43,7 @@
 #login {
     width: 400px;
     height:320px;
-    background:#e0a904;
+    background:#e0ad15;
     margin: auto;
     margin-top: 160px;
     padding-top: 25px;
@@ -56,7 +56,7 @@
 #Sign-up {
     width: 700px;
     height:fit-content;
-    background:#e0a904;
+    background:#e0ad15;
     margin: auto;
     margin-top: 20px;
     padding-top: 30px;
@@ -198,12 +198,12 @@
     font-size: 14px;
 }
 #login input[type="submit"]:hover {
-background-color: rgb(107, 211, 107);
+background-color: rgb(187, 240, 237);
 box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
 
 }
 #Sign-up input[type="submit"]:hover {
-    background-color: rgb(107, 211, 107);
+    background-color: rgb(187, 240, 237);
     box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
     
     }
