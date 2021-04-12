@@ -39,3 +39,9 @@ CREATE TABLE  users_events (
  event_id VARCHAR(255) REFERENCES events (event_id) ON UPDATE CASCADE ON DELETE CASCADE ,
   CONSTRAINT user_event_pkey PRIMARY KEY (user_id, event_id)
 );
+
+DROP TABLE IF EXISTS uidlogin ;
+CREATE TABLE uidlogin (
+  id SERIAL PRIMARY KEY NOT NULL,
+  loginid INT
+);

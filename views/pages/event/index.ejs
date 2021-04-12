@@ -15,7 +15,8 @@
   <div class="text">
  <h4 class="index-h4"> Name : <%= el.eventName %></h4>
  <h4>Location :  <%= el.venues %> ,  <%= el.city %>  ,  <%= el.country %> </h4>
-    <form action="/homepage" method="POST">
+ <h4>Start Date :  <%= el.startdate %>  End Date : <%= el.end_date %>  </h4>
+    <form action="/searchespage" method="POST">
         <input type="hidden" value="<%= el.eventId %>" name="eventId">
         <input type="hidden" value="<%= el.eventName %>" name="eventName">
         <input type="hidden" value="<%=el.imageUrl%>" name="img">
