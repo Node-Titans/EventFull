@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/styles/aboutUs.css">
+<%- include('./layout/head') %>
+    <link rel="stylesheet" href="../styles/aboutUs.css">
     <title>About Us</title>
 </head>
 <body>
+<%- include('./layout/header') %>
+
     <main>
         <div class="team" id="team">
             <!-- <div class="container2"> -->
@@ -16,7 +16,7 @@
                 <div class="col-xs-4 team-grid">
                     <div class="pic">
                         <div class="stack twisted">
-                            <img src="/img/duha.PNG" alt=" " class="img-responsive">
+                            <img src="../img/duha.PNG" alt=" " class="img-responsive">
                         </div>
                     </div>
                     <h4>Duha Al-Azzm</h4>
@@ -24,7 +24,7 @@
                 <div class="col-xs-4 team-grid">
                     <div class="pic">
                         <div class="stack twisted">
-                            <img src="/img/monther.PNG" alt=" " class="img-responsive">
+                            <img src="./img/monther.PNG" alt=" " class="img-responsive">
                         </div>
                     </div>
                     <h4>Monther Al-Khawaldeh</h4>
@@ -32,7 +32,7 @@
                 <div class="col-xs-4 team-grid">
                     <div class="pic">
                         <div class="stack twisted">
-                            <img src="/img/manar.PNG" alt=" " class="img-responsive">
+                            <img src="https://drive.google.com/file/d/1z4MvduEEJLsXw3xFpx_ehTfV8NlrESfq/view?usp=sharing" alt=" " class="img-responsive">
                         </div>
                     </div>
                     <h4>Manar AbdelKarim</h4>
@@ -40,7 +40,7 @@
                 <div class="col-xs-4 team-grid">
                     <div class="pic">
                         <div class="stack twisted">
-                            <img src="/img/noura.PNG" alt=" " class="img-responsive">
+                            <img src="../img/noura.PNG" alt=" " class="img-responsive">
                         </div>
                     </div>
                     <h4>Noura Al-Quraan </h4>
@@ -48,16 +48,17 @@
                 <div class="col-xs-4 team-grid">
                     <div class="pic">
                         <div class="stack twisted">
-                            <img src="/img/obada.PNG" alt=" " class="img-responsive">
+                            <img src="../img/obada.PNG" alt=" " class="img-responsive">
                         </div>
                     </div>
                     <h4>Obada Al-Athamneh</h4>
                 </div>
                 <div class="clearfix"> </div>
             </div>
-            <!-- </div> -->
         </div>
     </div>
     </main>
+    <%- include('./layout/footer') %>
+
 </body>
 </html>

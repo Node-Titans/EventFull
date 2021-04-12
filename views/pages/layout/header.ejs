@@ -8,17 +8,16 @@
         </a>
         <div id="myLinks">
             <a href="/">Home</a>
-            <a>
-            <form action="/searches" method="POST">
-                <label for="search">Search For Eents</label>
+            <form action="/searches" method="POST" id="search" style="display: inline">
+            
                 <input type="hidden" value="" name="searched">
             <input type="hidden" value="random" name="sortBy">
             <input type="hidden" value="US" name="countryCode">
-                <button type="submit">Search</button>
+                <a href="javascript:{}" onclick="document.getElementById('search').submit(); return false;">Search</a>
                 </form>
-                </a>
             <a href="/user">Your list</a>
             <a href="/aboutus">About</a>
+            <a href="/logout">Logout</a>
         </div>
     </div>
 </header>
