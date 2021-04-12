@@ -3,9 +3,11 @@
         <div class="nhov">
         <a href="/" class="active" ><span id="">Event</span> <span id="logospan">full</span></a>
         </div>
-        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()" >
             <i class="fa fa-bars"></i>
         </a>
+
+
         <div id="myLinks">
             <a href="/">Home</a>
             <form action="/searches" method="POST" id="search" style="display: inline">
@@ -19,5 +21,35 @@
             <a href="/aboutus">About</a>
             <a href="/logout">Logout</a>
         </div>
+
+        <div class="menu-wrap" >
+    <input type="checkbox" class="toggler">
+    <div class="hamburger"><div></div></div>
+    <div class="menu">
+      <div>
+        <div>
+          <ul>
+          <li><a href="/">Home</a></li>  
+          <li> <form action="/searches" method="POST" id="search" style="display: inline">
+            
+                <input type="hidden" value="" name="searched">
+            <input type="hidden" value="random" name="sortBy">
+            <input type="hidden" value="US" name="countryCode">
+                <a href="javascript:{}" onclick="document.getElementById('search').submit(); return false;">Search</a>
+                </form>
+                </li> 
+            
+           <li> <a href="/user">Your list</a> </li>   
+           <li>  <a href="/aboutus">About</a></li>  
+            <li> <a href="/logout">Logout</a></li>  
+          </ul>
+        </div>
+      </div>
     </div>
+  </div>
+    </div>
+
+
+
+
 </header>

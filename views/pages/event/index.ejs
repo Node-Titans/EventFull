@@ -13,7 +13,7 @@
 <article>
  <img class="index-img" src="<%=el.imageUrl%>" alt="<%= el.eventName %>">
   <div class="text">
- <h4 class="index-h4"> Name : <%= el.eventName %></h4>
+ <h4 class="index-h4"> <%= el.eventName %></h4>
  <h4>Location :  <%= el.venues %> ,  <%= el.city %>  ,  <%= el.country %> </h4>
     <form action="/homepage" method="POST">
         <input type="hidden" value="<%= el.eventId %>" name="eventId">

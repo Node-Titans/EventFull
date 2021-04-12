@@ -57,10 +57,13 @@ const renderSearchPage = (req, res) => {
     const event = eventData.map(event => {
       return new Event(event);
     });
-    // console.log('🚀 event', event);
+      // console.log('🚀 event', event);
     res.render('pages/event/search', { events: event });
-  }).catch((err) => errorHandler(err, req, res));
-};
+
+  }).catch((err) => {
+    res.render('pages/event/search', { events: 0 });
+  });
+}
 
 function addeventhomepage(req,res){
   const eventId=req.body.eventId;
@@ -102,7 +105,7 @@ function addeventsearch(req,res){
 
 const renderMainPage = (req, res) => {
   // the country should be added to find the venous
-  const url = 'https://app.ticketmaster.com/discovery/v2/events?apikey=HybkkamcQAG2qkxKtCkNknuFZvrNBLlx&locale=*&sort=random&countryCode=US';
+  const url = 'https://app.ticketmaster.com/discovery/v2/events?apikey=HybkkamcQAG2qkxKtCkNknuFZvrNBLlx&locale=*&sort=random&countryCode=US&page=2';
 
   superagent.get(url).then((data) => {
 
