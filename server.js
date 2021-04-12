@@ -358,7 +358,7 @@ app.get('/sign-up', (req, res) => {
   res.render('pages/user-signin-up/sign-up')
 });
 app.get('/about', (req, res) => {
-  res.render('pages/aboutUs')
+  res.render('pages/aboutUs/aboutUs')
 });
 
 app.get('/sign-in',(req,res)=>{
