@@ -236,7 +236,7 @@ async function registerNewUser(req, res){
     //check if username already exists
     client.query(user, safeValue).then(async(results) => {
     if (results.rows.length !== 0) {
-      res.render('user-signin-up/sign-up',{
+      res.render('pages/user-signin-up/sign-up',{
         error: "Sorry! An account with that username already exists!❌",
       });
     }
@@ -251,7 +251,7 @@ async function registerNewUser(req, res){
           const newUser = "INSERT INTO users (username, age , email, password, country , phoneNumber) VALUES($1, $2, $3, $4, $5,$6) RETURNING *";
           const safeValues= [username, age , email,hashedPassword, country , phoneNumber];
           client.query(newUser, safeValues).then((results) => {
-           res.render('user-signin-up/sign-up',{
+           res.render('pages/user-signin-up/sign-up',{
             massage :'Account created successfully!✔️' ,  
             });
           
@@ -265,7 +265,7 @@ async function registerNewUser(req, res){
     //check if email already exists
       client.query(usermail, safeValuemail).then(async(results) => {
     if (results.rows.length !== 0) {
-      res.render('user-signin-up/sign-up',{
+      res.render('pages/user-signin-up/sign-up',{
         error4: "Sorry! An account with that email already exists!❌",
       });
     
@@ -286,20 +286,20 @@ async function handleLogin(req, res){
       const safeValue=[username];
       client.query(user, safeValue).then(async(results) => {
       if (results.rows.length === 0) {
-        res.render('user-signin-up/sign-in',{
+        res.render('pages/user-signin-up/sign-in',{
           error: "Sorry! An account with that username doesn't exist!❌",
         });
       } else {
         //check if the password entered matches the one in the database
         bcrypt.compare(password, results.rows[0].password, (err, validPassword) => {
           if (err) {
-            res.render('user-signin-up/sign-in',{
+            res.render('pages/user-signin-up/sign-in',{
               error2: "Sorry! your username or password is incorrect❌ ",
             });
           } else if (validPassword) {
             res.redirect('/');
           } else {
-            res.render('user-signin-up/sign-in',{
+            res.render('pages/user-signin-up/sign-in',{
               error3: "Sorry! your username or password is incorrect❌ ",
             });
           }
