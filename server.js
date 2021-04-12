@@ -7,10 +7,42 @@ const cors = require('cors');
 const pg = require('pg');
 const methodOverride = require('method-override');
 const app = express();
+const nodemailer = require("nodemailer");
+const path = require("path");
+const hbs = require("nodemailer-express-handlebars");
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+transporter.use(
+  "compile",
+  hbs({
+    // viewEngine: "express-handlebars",
+    // viewPath: "./views/",
+    viewEngine: {
+      extName: ".hbs",
+      partialsDir: path.resolve(__dirname, "./views/"),
+      defaultLayout: false,
+      // partialsDir: [
+      //   //  path to your partials
+      //   path.join(__dirname, "./views/partials"),
+      // ],
+    },
+
+    viewPath: path.resolve(__dirname, "./views/"),
+
+    extName: ".hbs",
+  })
+);
 
 
 // Setup environment
-const PORT = process.env.PORT || 3030;
+const PORT = process.env.PORT || 3051;
 const DATABASE_URL = process.env.DATABASE_URL;
 
 // Middleware
@@ -28,7 +60,7 @@ const client =  new pg.Client({
 });
 
 
-const renderSearchResults = (req, res) => {
+const renderSearchPage = (req, res) => {
   const query = {
     apikey : process.env.EVENT_KEY ,
     keyword : req? req.body.searched:'',
@@ -51,16 +83,19 @@ const renderSearchResults = (req, res) => {
 
 
 
-const renderSearchPage = (req, res) => {
-  // const url = 'https://app.ticketmaster.com/discovery/v2/events?apikey=HybkkamcQAG2qkxKtCkNknuFZvrNBLlx&locale=*&sort=random';
+
+const renderMainPage = (req, res) => {
+  // the country should be added to find the venous
   const url = 'https://app.ticketmaster.com/discovery/v2/events?apikey=HybkkamcQAG2qkxKtCkNknuFZvrNBLlx&locale=*&sort=random&countryCode=US';
+
   superagent.get(url).then((data) => {
     let eventData = data.body._embedded.events;
+    // console.log("🚀 ~ file: server.js ~ line 59 ~ superagent.get ~ eventData", eventData)
     // eventData = [eventData];
     const event = eventData.map(event => {
       return new Event(event);
     });
-    // console.log('🚀 event', event);
+    console.log('🚀 event', event);
     res.render('pages/event/index', { events: event });
   }).catch((err) => errorHandler(err, req, res));
 };
@@ -111,9 +146,57 @@ function Event (data) {
 }
 
 // API home page Routes
-app.get('/', renderSearchPage);
+app.get('/', renderMainPage);
 // Search Results
-app.post('/searches', renderSearchResults);
+app.post('/searches', renderSearchPage);
+
+app.post('/messages', (request, response) => {
+  let email = request.body['email'];
+  let message = request.body['message'];
+  console.log('email', email, 'message', message);
+
+  const emailParams = {
+    email: email,
+    subject: `Contact us from ${email}`,
+    message: message,
+  };
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: process.env.CONTACT_US_EMAIL,
+    subject: emailParams.subject,
+    template: "index",
+    context: { emailParams: emailParams, received: new Date() },
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+      response.json({ status: false });
+    } else {
+      console.log("Email sent: " + info.response);
+      sendResponse(emailParams,response);
+      response.json({ status: true });
+    }
+  });
+});
+
 // wrong path rout
 app.use('*',handelWrongPath);
 
+function sendResponse(params, response) {
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: params.email,
+    subject: `Thank you for contacting us`,
+    template: "response",
+    context: { emailParams: params },
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+      //response.json({ status: false });
+    } else {
+      console.log("Email sent: " + info.response);
+      // response.json({ status: true });
+    }
+  });
+}

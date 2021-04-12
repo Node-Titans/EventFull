@@ -6,21 +6,23 @@
     <body>
 <%- include('../layout/header') %>
 
- <main>
+
+ <main class="grid index-main">
 
 
-
-     
-<ul>
  <% events.forEach(el => { %>
- <h4> Name : <%= el.eventName %></h4>
- <img src="<%=el.imageUrl%>" alt="<%= el.eventName %>">
+<article>
+ <img class="index-img" src="<%=el.imageUrl%>" alt="<%= el.eventName %>">
+  <div class="text">
+ <h4 class="index-h4"> Name : <%= el.eventName %></h4>
  <h4>Location :  <%= el.venues %> ,  <%= el.city %>  ,  <%= el.country %> </h4>
+  <button type="button"><a href="/#/<%=el.id%>">View Details</a> </button> 
+</div>
 
-  <button type="button"><a href="/books/<%=el.id%>">View Details</a> </button> 
+</article>
       <% }); %>
-</ul>
 
+ 
 <%  if (Object.keys(events).length === 0) { %>
  <h3>Sorry , No result was found</h3>
 
@@ -30,3 +32,6 @@
  <script src="js/app.js"></script>
     </body>
 </html>
+
+
+

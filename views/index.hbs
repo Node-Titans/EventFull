@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;700&display=swap");
+
+        * {
+            font-family: "Source Code Pro", monospace;
+        }
+
+        .header {
+            font-weight: bold;
+        }
+
+        .item,
+        .header {
+            font-size: 0.83em;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-areas:
+                'header menu'
+                'header menu '
+                'header menu ';
+        }
+    </style>
+</head>
+
+<body>
+    <hr>
+    <h3>
+        {{emailParams.subject}}
+    </h3>
+
+    <p>
+        {{emailParams.message}}
+    </p>
+
+    <hr>
+
+    <h4>
+        Sender Info
+    </h4>
+    <div class="grid-container">
+        <div class="header">Email</div>
+        <div class="item">{{emailParams.email}}</div>
+        <div class="header">Time Received</div>
+        <div class="item">{{received}}</div>
+    </div>
+    <hr>
+</body>
+
+</html>
