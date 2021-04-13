@@ -430,9 +430,9 @@ footer{
 		float: none;
 		max-width: 250px;
 		margin: 0 auto;
-		position: relative;
-		right: 100px;
+		
 	}
+	
 
 	.footerOne .footerTwo{
 		margin-bottom: 40px;
