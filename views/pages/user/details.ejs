@@ -4,12 +4,10 @@
     <%- include('../layout/head') %>
 </head>
 <body>
-    <%- include('../layout/header') %>
-    <br><br><br><br>
-    <section class="event-details-c">
-   
-        
     
+    <%- include('../layout/header') %>
+    <main class="event-details-c" >
+    <section class="event-details-c">
         <section class="event-details-l">
             <img src="<%= results[0].image_url %>" alt="" width="400" height="400">
             <h1 class="detail-h1"><%= results[0].event_name %></h1>
@@ -19,16 +17,16 @@
             <h4 class="detail-4">Country Code : <%=results[0].countrycode%></h4>
             <h4 class="detail-4"> Start Date :  <%= results[0].start_date %></h4> <h4 class="detail-4">  End Date : <%= results[0].end_date %>  </h4>
             <p class="detail-p"> about Event : <%= results[0].description%></p>
-            <a href="<%= results[0].url%> "> The url for event </a>  
+            <a href="<%= results[0].url%> " target="_blank"> The url for event </a>  
             <br> <br>
                <form action="/event/<%=  results[0].event_id %>?_method=DELETE" method='POST'>
-            <button class="btn" type="submit">Delet This Event</button>
+            <button class="event-details-btn" type="submit">Delete This Event</button>
         </form>
         </section>
        
     </section>
+</main>
     <%- include('../layout/footer') %>
-        <script src="js/app.js"></script>
-
+    <script src="../js/app.js"></script>
 </body>
 </html>
