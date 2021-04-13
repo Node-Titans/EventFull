@@ -5,14 +5,22 @@
 
     <div class="footerTwo">
 
-        <h3> Node <span>titan</span></h3>
+        <h3> Event <span>full</span></h3>
 
         <p class="footerThree">
-            <a href="#">Home</a>
-            ·
-            <a href="#">About-Us</a>
-            ·
-            <a href="#">Contact</a>
+            <a href="http://localhost:3052/">Home  </a>
+            
+            <a href="http://localhost:3052/about">  About-Us  </a>
+            
+            
+            <a form action="/searches" method="POST" id="search" style="display: inline">
+            
+                <input type="hidden" value="" name="searched">
+            <input type="hidden" value="random" name="sortBy">
+            <input type="hidden" value="US" name="countryCode">
+                <a href="javascript:{}" onclick="document.getElementById('search').submit(); return false;"> Search</a>
+                </form>
+            </a>
         </p>
 
 
@@ -28,17 +36,49 @@
     </div>
 
     <div class="footerFour">
-
+        <!-- The actual snackbar -->
+        <div id="snackbar"></div>
         <p>Contact Us</p>
 
         <form>
-
-            <input type="text" name="email" placeholder="Email">
+            <input type="email" name="email" placeholder="Email">
             <textarea name="message" placeholder="Message"></textarea>
-            <button>Send</button>
-
+            <button type="button" id="send">Send</button>
         </form>
+        <script>
+            $(document).ready(function () {
+                $("#send").click(function () {
+                    let email = $("input[name=email]").val();
+                    let message = $("textarea[name=message]").val();
+                    if (!email || !message) {
+                        showSnackbar('Sorry the email and the message are required!', 'red');
+                        return;
+                    }
+                    sendMessage(email, message);
+                });
+            });
+            function sendMessage(email, message) {
+                console.log(email, message);
+                $.post("/messages", { email: email, message: message }, function (data) {
+                    console.log(email, message);
+                    $("input[name=email]").val("");
+                    $("textarea[name=message]").val("");
+                    showSnackbar('Your message has been sent!', 'green');
+                });
+            }
+            function showSnackbar(msg, color) {
+                // Get the snackbar DIV
+                var x = document.getElementById("snackbar");
 
+                // Add the "show" class to DIV
+                x.className = "show";
+                x.innerHTML = msg;
+                x.style.backgroundColor = color;
+
+                // After 3 seconds, remove the show class from DIV
+                setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+            }
+        </script>
     </div>
 
 </footer>
