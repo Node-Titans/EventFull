@@ -324,13 +324,14 @@ footer{
 }
 
 .event-details-c{
-	margin: auto auto auto;
+	margin : 0 auto;
+	width: 100%;
 }
 .event-details-l{
+	margin :0 auto;
 	width: 50%;
 	text-align: center;
 	align-items: center;
-	margin-left: 250px;
 	margin-top: 20px;
 	background-color: white;
     border: 1px solid rgba(0, 0, 0, 0.8);
@@ -412,4 +413,20 @@ footer{
 	.footerOne form button{
 		float: none;
 	}
+}
+.btn{
+	height: 40px;
+	margin-top: 0px;
+	background-color:orange;
+	border: 0;
+	border-radius: 5px;
+	cursor: pointer;
+	color: #fff;
+	font-size:16px;
+	font-weight: bold;
+	line-height: 1.4;
+	padding: 10px;
+	width: 180px;
+	text-decoration: none;
+
 }
