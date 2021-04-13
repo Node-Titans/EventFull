@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+    <title>Sign Up</title>
+    <%- include('../layout/head') %>
+
+    
+</head>
+
+<body id="Sign-UP">
+    <div id="Sign-up" class="animated bounce">
+
+        <h1> Sign Up </h1>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <fieldset>
+                <legend>Upload your profile pic</legend>
+                <input class="input" type="file" id="profileImage" name="image" required>
+                <input class="input" type="submit" value="upload">
+            </fieldset>
+        </form>
+        <p><%= typeof msg != 'undefined' ? msg :'' %> </p>
+        <p><%= typeof massage != 'undefined' ? massage :'' %> </p>
+        <p><%= typeof error != 'undefined' ? error :'' %> </p>
+        <p><%= typeof error4 != 'undefined' ? error4 :'' %> </p>
+
+        
+        <form action="/check" method="POST">
+            <fieldset>
+                <label for="name">Name:</label>
+                <input class="input" type="text" id="name" name="username" placeholder="Enter your name" required>
+                <br>
+                <label for="email">Email:</label>
+                <input class="input" type="email" id="email" name="email" placeholder="Enter your Email" required>
+                <br>
+                <label for="password">Password:</label>
+                <input class="input" type="password" id="password" name="password" placeholder="Enter your passward" required>
+                <br>
+                <label for="country">Country:</label>
+                <input class="input" type="text" id="country" name="country" placeholder="Enter your country" required>
+                <br>
+                <label for="phoneNumber">phoneNumber:</label>
+                <input class="input" type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" pattern='^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$' required>
+                <br>
+                <label for="checkAge">Age :</label>
+                <input class="input" type="number" id="checkAge" name="age" value="checkAge" placeholder="Enter your age" required>
+                <br>
+                <input type="checkbox" id="accept" name="accept" value="accept" required>
+                <label for="accept">I accept EventsFull's use of my data for the service</label>
+                <br>
+            </fieldset>
+            <input class="input" type="submit" value="Sign Up">
+        </form>
+        <p>Do you have an account? <a href='/sign-in' target="_blank" rel="noopener noreferrer">Sign In</a></p>
+    </div>
+
+
+</body>
+
+</html>

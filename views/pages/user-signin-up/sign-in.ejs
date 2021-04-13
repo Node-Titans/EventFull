@@ -2,16 +2,22 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
     <title>Login-page</title>
+<%- include('../layout/head') %>
+
 </head>
 
 <body id="signIn">
     <div id="login" class="animated bounce">
         <h2>login</h2>
-        <form action=""  method="POST">
+        <p>Welcome back  👋</p>
+        
+        <p><%= typeof error!= 'undefined' ? error:'' %> </p>
+        <p><%= typeof error2 != 'undefined' ? error2 :'' %> </p>
+        <p><%= typeof error3 != 'undefined' ? error3 :'' %> </p>
+
+        <form action="/login"  method="POST">
             <div class="input">
                 <label for="name" class="entypo-user"></label>
                 <input type="text" name="username" id="name" placeholder="username" />
@@ -21,7 +27,7 @@
                 <input type="password" name="password" " id="pw " placeholder="•••••• " />
             </div>
             <input type="submit" value="Sign In " />
-           <p>You do not have an account? <a href='/sign-up' target="_blank" rel="noopener noreferrer">Register now</a> </p> 
+           <p>You do not have an account? <a href='/sign-Up' target="_blank" rel="noopener noreferrer">Register now</a> </p> 
 
         </form>
           

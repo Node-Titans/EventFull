@@ -14,19 +14,31 @@
 <article>
  <img class="index-img" src="<%=el.imageUrl%>" alt="<%= el.eventName %>">
   <div class="text">
- <h4 class="index-h4"> Name : <%= el.eventName %></h4>
+ <h4 class="index-h4"> <%= el.eventName %></h4>
  <h4>Location :  <%= el.venues %> ,  <%= el.city %>  ,  <%= el.country %> </h4>
-  <button type="button"><a href="/#/<%=el.id%>">View Details</a> </button> 
+ <h4>Start Date :  <%= el.startdate %>  End Date : <%= el.end_date %>  </h4>
+    <form action="/searchespage" method="POST">
+        <input type="hidden" value="<%= el.eventId %>" name="eventId">
+        <input type="hidden" value="<%= el.eventName %>" name="eventName">
+        <input type="hidden" value="<%=el.imageUrl%>" name="img">
+        <input type="hidden" value="<%= el.venues %>" name="venues">
+        <input type="hidden" value="<%= el.city %>" name="city">
+        <input type="hidden" value="<%= el.country %>" name="country">
+        <input type="hidden" value="<%= el.countryCode %>" name="countryCode">
+        <input type="hidden" value="<%= el.end_date %>" name="enddate">
+        <input type="hidden" value="<%= el.startDate %>" name="startdate">
+        <input type="hidden" value="<%= el.Description %>" name="Description">
+        <input type="hidden" value="<%= el.url %>" name="url">
+        <input class="btn1"  type="submit" value="Add this Event">
+    </form>
+  <!-- <button type="button"><a href="/books/<%=el.id%>">View Details</a> </button>  -->
+  <!-- <button type="button"><a href="/#/<%=el.id%>">View Details</a> </button>  -->
 </div>
 
 </article>
       <% }); %>
 
  
-<%  if (Object.keys(events).length === 0) { %>
- <h3>Sorry , No result was found</h3>
-
- <% } %>
  </main>
      <%- include('../layout/footer') %>
  <script src="js/app.js"></script>

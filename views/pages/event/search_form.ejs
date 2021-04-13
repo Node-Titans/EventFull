@@ -1,21 +1,21 @@
-<main style="margin:0 0 2% 2%;">
+<%- include('../layout/head') %>
+<main class="search-main" style="margin:0 0 2% 2%;">
+
     <section class="search-card">
-    <form action="/searches" method="POST">
+    <form  class='search-form'action="/searches" method="POST">
     <fieldset>
   <legend>
     <label for="search">Search For Eents</label>
-    <input type="text" name="searched">
+    <input type="text" name="searched" placeholder="Search">
 
-<select name="sortBy" id="search-sort">
+<select class="search-option" name="sortBy" id="search-sort">
   <option value="name,asc">Name Ascending</option>
   <option value="name,desc">Name descending</option>
   <option value="relevance,asc">Relevance</option>
-  <option value="distance,asc">Distance</option>
 <option value="date,desc">Date</option>
-<option value="venueName,asc'">Venue</option>
 </select>
 
-<select name="countryCode" id="search-sort">
+<select  class="search-option" name="countryCode" id="search-sort">
   <option value="US">United States Of America</option>
   <option value="DK">Denmark</option>
   <option value="FR">France</option>

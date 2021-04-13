@@ -1,13 +1,415 @@
+/* index and search */
 .index-img{
-    width: 99%;
+    width: 100%;
     height: 222px;
     block-size: border-box;
 }
 
 .index-main {
-    margin: 0 2%;
+    margin: 0 2% 10% 2%;
 }
 
 .index-h4{
     font-size: x-large;
+}
+.search-form input[type="text"] , select ,button{
+    height: 29px;
+    position: relative;
+    bottom: 5px;
+}
+.search-form label {
+    font-size:43px ;
+}
+
+.menu-wrap{
+    display: none;
+}
+@media (max-width: 643px){
+    :root {
+        /* --primary-color: rgba(0, 0, 0, 0.924); */
+        --overlay-color: rgba(37, 117, 160, 0.85);
+        --menu-speed: 0.75s;
+      }
+.icon {
+    display:none ;
+}
+.menu-wrap{
+    display: block;
+}
+ .search-form * {
+
+    display: block;
+    width: 90%;
+    margin: 5px auto;
+    height : 5%
+}
+/* MENU STYLES */
+.menu-wrap {
+    position: fixed;
+    top: 0;
+    right: 53px;
+    z-index: 1;
+  }
+  
+  
+  .menu-wrap .toggler {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    opacity: 0;
+  }
+  
+  .menu-wrap .hamburger {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 60px;
+    height: 60px;
+    padding: 1rem;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Hamburger Line */
+  .menu-wrap .hamburger > div {
+    position: relative;
+    flex: none;
+    width: 100%;
+    height: 2px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+  }
+  
+  /* Hamburger Lines - Top & Bottom */
+  .menu-wrap .hamburger > div::before,
+  .menu-wrap .hamburger > div::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: -10px;
+    width: 100%;
+    height: 2px;
+    background: inherit;
+  }
+  
+  /* Moves Line Down */
+  .menu-wrap .hamburger > div::after {
+    top: 10px;
+  }
+  
+  /* Toggler Animation */
+  .menu-wrap .toggler:checked + .hamburger > div {
+    transform: rotate(135deg);
+  }
+  
+  /* Turns Lines Into X */
+  .menu-wrap .toggler:checked + .hamburger > div:before,
+  .menu-wrap .toggler:checked + .hamburger > div:after {
+    top: 0;
+    transform: rotate(90deg);
+  }
+  
+  /* Rotate On Hover When Checked */
+  .menu-wrap .toggler:checked:hover + .hamburger > div {
+    transform: rotate(225deg);
+  }
+  
+  /* Show Menu */
+  .menu-wrap .toggler:checked ~ .menu {
+    visibility: visible;
+  }
+  
+  .menu-wrap .toggler:checked ~ .menu > div {
+    transform: scale(1);
+    transition-duration: var(--menu-speed);
+  }
+  
+  .menu-wrap .toggler:checked ~ .menu > div > div {
+    opacity: 1;
+    transition:  opacity 0.4s ease 0.4s;
+  }
+  
+  .menu-wrap .menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .menu-wrap .menu > div {
+    background: var(--overlay-color);
+    border-radius: 38%;
+    width: 200vw;
+    height: 200vw;
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0);
+    transition: all 0.4s ease;
+  }
+  
+  .menu-wrap .menu > div > div {
+    text-align: center;
+    max-width: 90vw;
+    max-height: 100vh;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  
+  .menu-wrap .menu > div > div > ul > li {
+    list-style: none;
+    color: #fff;
+    font-size: 1.5rem;
+    padding: 1rem;
+    
+  }
+  
+  .menu-wrap .menu > div > div > ul > li > a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.4s ease;
+    display: block;
+  }
+
+}
+
+/* sign in / sign up pages*/
+
+
+[class*="entypo-"]:before {
+    font-family: 'entypo', sans-serif;
+}
+
+#signIn {
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(306deg, rgba(54, 54, 54, 0.05) 0%, rgba(54, 54, 54, 0.05) 33.333%,rgba(85, 85, 85, 0.05) 33.333%, rgba(85, 85, 85, 0.05) 66.666%,rgba(255, 255, 255, 0.05) 66.666%, rgba(255, 255, 255, 0.05) 99.999%),linear-gradient(353deg, rgba(81, 81, 81, 0.05) 0%, rgba(81, 81, 81, 0.05) 33.333%,rgba(238, 238, 238, 0.05) 33.333%, rgba(238, 238, 238, 0.05) 66.666%,rgba(32, 32, 32, 0.05) 66.666%, rgba(32, 32, 32, 0.05) 99.999%),linear-gradient(140deg, rgba(192, 192, 192, 0.05) 0%, rgba(192, 192, 192, 0.05) 33.333%,rgba(109, 109, 109, 0.05) 33.333%, rgba(109, 109, 109, 0.05) 66.666%,rgba(30, 30, 30, 0.05) 66.666%, rgba(30, 30, 30, 0.05) 99.999%),linear-gradient(189deg, rgba(77, 77, 77, 0.05) 0%, rgba(77, 77, 77, 0.05) 33.333%,rgba(55, 55, 55, 0.05) 33.333%, rgba(55, 55, 55, 0.05) 66.666%,rgba(145, 145, 145, 0.05) 66.666%, rgba(145, 145, 145, 0.05) 99.999%),linear-gradient(90deg, rgb(9, 201, 186),rgb(28, 124, 179));
+    background-size: cover;
+    font-family: 'Boogaloo', cursive !important;
+    letter-spacing: 1px;
+    height: 100%;
+    width: 100%;
+}
+#Sign-UP{
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(306deg, rgba(54, 54, 54, 0.05) 0%, rgba(54, 54, 54, 0.05) 33.333%,rgba(85, 85, 85, 0.05) 33.333%, rgba(85, 85, 85, 0.05) 66.666%,rgba(255, 255, 255, 0.05) 66.666%, rgba(255, 255, 255, 0.05) 99.999%),linear-gradient(353deg, rgba(81, 81, 81, 0.05) 0%, rgba(81, 81, 81, 0.05) 33.333%,rgba(238, 238, 238, 0.05) 33.333%, rgba(238, 238, 238, 0.05) 66.666%,rgba(32, 32, 32, 0.05) 66.666%, rgba(32, 32, 32, 0.05) 99.999%),linear-gradient(140deg, rgba(192, 192, 192, 0.05) 0%, rgba(192, 192, 192, 0.05) 33.333%,rgba(109, 109, 109, 0.05) 33.333%, rgba(109, 109, 109, 0.05) 66.666%,rgba(30, 30, 30, 0.05) 66.666%, rgba(30, 30, 30, 0.05) 99.999%),linear-gradient(189deg, rgba(77, 77, 77, 0.05) 0%, rgba(77, 77, 77, 0.05) 33.333%,rgba(55, 55, 55, 0.05) 33.333%, rgba(55, 55, 55, 0.05) 66.666%,rgba(145, 145, 145, 0.05) 66.666%, rgba(145, 145, 145, 0.05) 99.999%),linear-gradient(90deg, rgb(9, 201, 186),rgb(28, 124, 179));
+    background-size: cover;
+    font-family: 'Boogaloo', cursive !important;
+    letter-spacing: 1px;
+    height: 100%;
+    width: 100%;
+}
+
+#login {
+    width: 400px;
+    height:320px;
+    background:#e0a904;
+    margin: auto;
+    margin-top: 160px;
+    padding-top: 25px;
+    border-radius: 5px;
+    border: 1px solid rgba(112, 108, 108, 0.4);
+    box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.2), inset -5px -5px 15px rgba(255, 255, 255, 0.25);
+    box-sizing: border-box;
+    
+}
+#Sign-up {
+    width: 700px;
+    height:fit-content;
+    background:#e0a904;
+    margin: auto;
+    margin-top: 20px;
+    padding-top: 30px;
+    border-radius: 5px;
+    border: 1px solid rgba(112, 108, 108, 0.4);
+    box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.2), inset -5px -5px 15px rgba(255, 255, 255, 0.25);
+    box-sizing: border-box;
+}
+
+#login:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 80px;
+    height: 7px;
+    margin: 25px auto 38px auto;
+    background: rgba(0, 0, 0, .2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+}
+
+#login:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: -91%;
+    width: 54px;
+    height: 320px;
+    box-shadow: inset 0px -5px 5px rgba(0, 0, 0, 0.25);
+    background-color: #fcf6f6;
+    background-repeat: repeat-y;
+    z-index: 999;
+}
+
+
+#login h2 {
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+	color:  #072736;
+    font-size: 26px;
+    padding-top: 10px;
+}
+#Sign-up h1 , h2 {
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+	color:  #072736;
+    font-size: 26px;
+    padding-top: 10px;
+}
+#login form {
+    width: 285px;
+    margin: auto;
+}
+#Sign-up form {
+    width: 485px;
+    margin: auto;
+}
+#login p{
+    font-size:small;
+    padding: 5px;
+    text-align: center;
+}
+#Sign-up p{
+    font-size:small;
+    padding: 5px;
+    text-align: center;
+}
+.input {
+    width: 100%;
+    height: 38px;
+    line-height: 36px;
+    padding: 0px 9px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(242, 242, 242, 0.3);
+    box-sizing: border-box;
+    box-shadow: inset 0px 0px 8px rgba(0, 0, 0, .2);
+}
+
+.input label {
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+    width: 20px;
+}
+
+.input input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: none;
+    border: none;
+    width: 235px;
+    outline: none;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 100;
+    letter-spacing: 1px;
+}
+
+::placeholder {
+    color: rgb(19, 17, 17);
+}
+
+#login input[type="submit"] {
+    display: block;
+    width: 100%;
+    height: 38px;
+    box-sizing: border-box;
+    background: #0d3041;
+    border-radius: 5px;
+    border: 1px solid #626362;
+    outline: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 14px;
+}
+#Sign-up  input[type="submit"] {
+    display: block;
+    width: 100%;
+    height: 38px;
+    box-sizing: border-box;
+    background: #0d3041;
+    border-radius: 5px;
+    border: 1px solid #626362;
+    outline: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 14px;
+}
+#login input[type="submit"]:hover {
+background-color: rgb(107, 211, 107);
+box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
+
+}
+#Sign-up input[type="submit"]:hover {
+    background-color: rgb(107, 211, 107);
+    box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
+    
+    }
+.animated {
+    animation-duration: 1500ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+}
+
+.bounce {
+    animation-name: bounce;
+    transform-origin: top center;
+}
+
+@keyframes bounce {
+    0% {
+        transform: rotate(15deg) translateY(-250px) translateX(-50px);
+    }
+    25% {
+        transform: rotate(-10deg) translateY(0px) translateX(10px);
+    }
+    50% {
+        transform: rotate(5deg) translateY(-10px) translateX(0);
+    }
+    75% {
+        transform: rotate(0deg) translateY(0);
+    }
+    100% {
+        transform: rotate(0deg) translateY(0);
+    }
 }
