@@ -221,7 +221,7 @@
 #login {
     width: 400px;
     height:320px;
-    background:#e0a904;
+    background:#e0ad15;
     margin: auto;
     margin-top: 160px;
     padding-top: 25px;
@@ -234,7 +234,7 @@
 #Sign-up {
     width: 700px;
     height:fit-content;
-    background:#e0a904;
+    background:#e0ad15;
     margin: auto;
     margin-top: 20px;
     padding-top: 30px;
@@ -376,12 +376,12 @@
     font-size: 14px;
 }
 #login input[type="submit"]:hover {
-background-color: rgb(107, 211, 107);
+background-color: rgb(187, 240, 237);
 box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
 
 }
 #Sign-up input[type="submit"]:hover {
-    background-color: rgb(107, 211, 107);
+    background-color: rgb(187, 240, 237);
     box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
     
     }
@@ -412,4 +412,72 @@ box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
     100% {
         transform: rotate(0deg) translateY(0);
     }
+}
+/*Profile Page */
+.profile{
+    background-color: #227fa11c;
+}
+.Profile-container{
+  width: 450px;
+  margin: 120px auto 120px;
+  background-color: #fff;
+  padding: 0 20px 20px;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.075);
+  text-align: center;
+}
+.Profile-container:hover .avatar-flip {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+.Profile-container:hover .avatar-flip img:first-child {
+  opacity: 0;
+}
+.Profile-container:hover .avatar-flip img:last-child {
+  opacity: 1;
+}
+.avatar-flip {
+  border-radius: 100px;
+  overflow: hidden;
+  height: 150px;
+  width: 150px;
+  position: relative;
+  margin: auto;
+  top: -60px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 0 13px #ffc107c5;
+}
+.avatar-flip img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 100px;
+  transition: all 0.3s ease-in-out;
+  
+}
+.avatar-flip img:first-child {
+  z-index: 1;
+}
+.avatar-flip img:last-child {
+  z-index: 0;
+  transform: rotateY(180deg);
+  opacity: 0;
+}
+.Profile-container h2 {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #333;
+}
+.Profile-container h3 {
+  font-size: 13px;
+  color: #00baff;
+  letter-spacing: 1px;
+  margin-bottom: 25px
+}
+.Profile-container h4 {
+  font-size: 16px;
+  line-height: 26px;
+  margin-bottom: 20px;
+  color: #666;
 }

@@ -37,15 +37,21 @@
   position: absolute;
   bottom: 7px; 
 }
-/* about Us css */
-/* -------------- */
+/********************************************************* about Us css*********************************************************************** */
+/* -------------------------------------------------------------------------------------------- ---------------------------------*/
 
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
 
-.team-grid h4 {
-  font-size: 15px!important;
-}
+   div .col-xs-4{
+    width: 300px;
+    height: 350px;
+  }
+    div .team-grids{
+    width: 300px;
+
+    margin:auto;
+  } 
 }
 
 
@@ -67,6 +73,7 @@ h3.title {
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
+  padding-bottom: 15px;
 }
 /*-- Team --*/
 
@@ -253,4 +260,91 @@ h3.title {
     width: 250px;
     height: 250px;
   }
+}
+.social-nav li {
+  display: inline-block;
+}
+
+.social-nav a {
+  display: inline-block;
+  float: none;
+  width: 30px;
+  height: 30px;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+  line-height: 30px;
+  background: #000;
+  position: relative;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.model-3d-0 a {
+  background: #5C5B5B;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.model-3d-0 .front,
+.model-3d-0 .back {
+  width: 30px;
+  height: 30px;
+  font-size: 1em;
+  color: #fff;
+  background: #faad81;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-transform: translateZ(18px);
+  -moz-transform: translateZ(18px);
+  -ms-transform: translateZ(18px);
+  -o-transform: translateZ(18px);
+  transform: translateZ(18px);
+  -webkit-backface-visibility: visible;
+  -moz-backface-visibility: visible;
+  -ms-backface-visibility: visible;
+  -o-backface-visibility: visible;
+  backface-visibility: visible;
+}
+
+.model-3d-0 .back {
+  font-size: 1em;
+  color: #fff;
+  -webkit-transform: rotateX(90deg) translateZ(18px);
+  -moz-transform: rotateX(90deg) translateZ(18px);
+  -ms-transform: rotateX(90deg) translateZ(18px);
+  -o-transform: rotateX(90deg) translateZ(18px);
+  transform: rotateX(90deg) translateZ(18px);
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.github .back,
+.linkedin .back {
+  background: #81cdfa;
+}
+
+.model-3d-0 a:hover {
+  -webkit-transform: rotateX(-90deg);
+  -moz-transform: rotateX(-90deg);
+  -ms-transform: rotateX(-90deg);
+  -o-transform: rotateX(-90deg);
+  transform: rotateX(-90deg);
+}
+
+.model-3d-0 a:hover .back {
+  -webkit-backface-visibility: visible;
+  -moz-backface-visibility: visible;
+  -ms-backface-visibility: visible;
+  -o-backface-visibility: visible;
+  backface-visibility: visible;
 }

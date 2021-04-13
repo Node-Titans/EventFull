@@ -18,7 +18,8 @@ create table events (
  CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY NOT NULL,
   username VARCHAR(20) UNIQUE NOT NULL,
-  age INT , CHECK (age>16),
+  age INT , 
+  image VARCHAR(500),
   email VARCHAR(50) UNIQUE NOT NULL,
   password CHAR(60),
   country  VARCHAR(255),

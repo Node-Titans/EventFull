@@ -7,15 +7,47 @@ const cors = require('cors');
 const pg = require('pg');
 const methodOverride = require('method-override');
 const app = express();
-const path = require('path');
+const nodemailer = require("nodemailer");
+const path = require("path");
+const hbs = require("nodemailer-express-handlebars");
 const multer = require('multer'); // to upload image
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+transporter.use(
+  "compile",
+  hbs({
+    // viewEngine: "express-handlebars",
+    // viewPath: "./views/",
+    viewEngine: {
+      extName: ".hbs",
+      partialsDir: path.resolve(__dirname, "./views/"),
+      defaultLayout: false,
+      // partialsDir: [
+      //   //  path to your partials
+      //   path.join(__dirname, "./views/partials"),
+      // ],
+    },
+
+    viewPath: path.resolve(__dirname, "./views/"),
+
+    extName: ".hbs",
+  })
+);
+
+
 
 // Setup environment
-const PORT = process.env.PORT || 3030;
+const PORT = process.env.PORT || 3051;
 const DATABASE_URL = process.env.DATABASE_URL;
 
 // Middleware
@@ -33,21 +65,21 @@ app.use(express.static('./public/js'));
 const client = new pg.Client({
   connectionString: DATABASE_URL,
 });
-
 // set storage engine
 const storage = multer.diskStorage({
   destination: './public/uploads/',
   filename: function(req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
-  }
+    cb(null, file.originalname)
+    }
+ 
 });
 
 const renderSearchPage = (req, res) => {
   const query = {
     apikey : process.env.EVENT_KEY ,
-    keyword : req.body.searched,
-    sort: req.body.sortBy ,
-    countryCode :  req.body.countryCode
+    keyword : req? req.body.searched:'',
+    sort: req ?  req.body.sortBy:'random',
+    countryCode :  req ? req.body.countryCode: 'US'
   }
   const url =  'https://app.ticketmaster.com/discovery/v2/events?&locale=*';
 
@@ -110,6 +142,7 @@ function addEventSearch(req,res){
     });
   }).catch((err) => errorHandler(err, req, res));
 }
+
 
 const renderMainPage = (req, res) => {
   // the country should be added to find the venous
@@ -227,7 +260,7 @@ function handleProfilePic(req, res) {
           msg: 'Error : No file selected !!',
         });
       } else {
-        const image = `uploads/${req.file.fieldname}-${Date.now()}${path.extname(req.file.originalname)}`;
+        const image = `uploads/${req.file.originalname}`;
         const sqlQuery = 'INSERT INTO images (image) VALUES($1) RETURNING id;';
         const safeValues = [image];
         client.query(sqlQuery, safeValues).then(() => {
@@ -261,14 +294,18 @@ async function registerNewUser(req, res){
               error: error.message,
             });
           } else {
-            const newUser = 'INSERT INTO users (username, age , email, password, country , phoneNumber) VALUES($1, $2, $3, $4, $5,$6) RETURNING *';
-            const safeValues= [username, age , email,hashedPassword, country , phoneNumber];
+            const userimage='SELECT image FROM images ORDER BY ID DESC LIMIT 1';
+            client.query(userimage).then((data=>{
+            const image=data.rows[0].image;
+            const newUser = `INSERT INTO users (username, age ,image, email, password, country , phoneNumber) VALUES($1, $2, $3, $4, $5,$6,$7) RETURNING *`;
+            const safeValues= [username, age ,image, email,hashedPassword, country , phoneNumber];
             client.query(newUser, safeValues).then((results) => {
-              res.render('pages/user-signin-up/sign-up',{
-                massage :'Account created successfully!✔️' ,
+             res.render('pages/user-signin-up/sign-up',{
+              massage :'Account created successfully!✔️' ,  
               });
-
-            });
+            
+            }); }
+              ));
           }
         })
       }
@@ -343,14 +380,12 @@ function handleLogout( req, res) {
 function deleteEvent(req,res) {
   const eventId = req.params.id ;
   const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
-  console.log('eventId 😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎' , eventId);
 
 
   client.query(idq).then((data)=>{
-    console.log('I am here 😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎');
 
     const iduser=data.rows[0].loginid ;
-    console.log(' iduser 😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎',iduser);
+    
 
     const deleteQuery=` delete from users_events where event_id=$1 AND user_id=$2;`;
     const into = [eventId , iduser];
@@ -360,6 +395,23 @@ function deleteEvent(req,res) {
   })
 
 }
+
+app.get("/profile", function (req, res) {
+  const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
+  const userinf= 'SELECT * FROM users WHERE id=$1;';
+  client.query(idq).then((data)=>{
+    const iduser=data.rows[0].loginid ;
+    const into = [iduser];
+  client.query(userinf,into).then(results => {
+       console.log('😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎',results.rows[0]);
+     res.render('pages/user-signin-up/user-profile', { results: results.rows[0] });
+  });
+}).catch(error => { 
+  res.send({
+  error: err.message,
+});
+});
+}); 
 
 // API home page Routes
 
@@ -371,6 +423,11 @@ app.get('/user/:id',renderEventDetails);
 app.get('/', renderMainPage);
 // Search Results
 app.post('/searches', renderSearchPage);
+
+app.post('/messages', sendMessage)
+
+
+
 app.post('/check',urlencodedParser,registerNewUser);
 app.get('/logout',handleLogout);
 app.post('/login',urlencodedParser,handleLogin);
@@ -399,3 +456,51 @@ app.use('*', handelWrongPath);
 
 
 
+function sendResponse(params, response) {
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: params.email,
+    subject: `Thank you for contacting us`,
+    template: "response",
+    context: { emailParams: params },
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+      //response.json({ status: false });
+    } else {
+      console.log("Email sent: " + info.response);
+      // response.json({ status: true });
+    }
+  });
+}
+
+// Send auto message for the user 
+function sendMessage (request, response) {
+  let email = request.body['email'];
+  let message = request.body['message'];
+  console.log('email', email, 'message', message);
+
+  const emailParams = {
+    email: email,
+    subject: `Contact us from ${email}`,
+    message: message,
+  };
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: process.env.CONTACT_US_EMAIL,
+    subject: emailParams.subject,
+    template: "index",
+    context: { emailParams: emailParams, received: new Date() },
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+      response.json({ status: false });
+    } else {
+      console.log("Email sent: " + info.response);
+      sendResponse(emailParams,response);
+      response.json({ status: true });
+    }
+  });
+}
