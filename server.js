@@ -403,7 +403,6 @@ app.get("/profile", function (req, res) {
     const iduser=data.rows[0].loginid ;
     const into = [iduser];
   client.query(userinf,into).then(results => {
-       console.log('😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎',results.rows[0]);
      res.render('pages/user-signin-up/user-profile', { results: results.rows[0] });
   });
 }).catch(error => { 
@@ -412,6 +411,35 @@ app.get("/profile", function (req, res) {
 });
 });
 }); 
+
+app.put('/profile',urlencodedParser, handleUpdateProfile);
+app.delete('/profile',handleDeleteAccount);
+
+
+
+function handleUpdateProfile(req, res) {
+  const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
+  client.query(idq).then((data)=>{
+  const iduser=data.rows[0].loginid ;
+  const { username, age ,image, email, country , phoneNumber } = req.body;
+  const safeValues = [username, age ,email, country , phoneNumber,iduser];
+  const updateQuery = 'UPDATE users SET username=$1, age=$2, email=$3, country=$4, phoneNumber=$5 WHERE id=$6;';
+  client.query(updateQuery, safeValues).then(() => {
+      res.redirect('/profile');
+  })}).catch((err) => errorHandler(err, req, res));
+};
+
+function handleDeleteAccount(req, res) {
+  const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
+  const deleteQuery = 'DELETE FROM users WHERE id=$1;';
+    client.query(idq).then((data)=>{
+    const iduser=data.rows[0].loginid ;
+    const into = [iduser];
+  client.query(deleteQuery,into).then(results => {
+      res.redirect('/sign-in');
+  })
+}).catch((err) => errorHandler(err, req, res));
+};
 
 // API home page Routes
 

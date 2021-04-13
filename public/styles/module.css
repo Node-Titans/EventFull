@@ -221,7 +221,7 @@
 #login {
     width: 400px;
     height:320px;
-    background:#e0ad15;
+    background:#ffc004;
     margin: auto;
     margin-top: 160px;
     padding-top: 25px;
@@ -234,7 +234,7 @@
 #Sign-up {
     width: 700px;
     height:fit-content;
-    background:#e0ad15;
+    background:#d6ac2e;
     margin: auto;
     margin-top: 20px;
     padding-top: 30px;
@@ -332,8 +332,6 @@
 }
 
 .input input {
-    -webkit-appearance: none;
-    -moz-appearance: none;
     appearance: none;
     background: none;
     border: none;
@@ -354,7 +352,7 @@
     width: 100%;
     height: 38px;
     box-sizing: border-box;
-    background: #0d3041;
+    background: #015555;
     border-radius: 5px;
     border: 1px solid #626362;
     outline: none;
@@ -367,7 +365,7 @@
     width: 100%;
     height: 38px;
     box-sizing: border-box;
-    background: #0d3041;
+    background: #015555;
     border-radius: 5px;
     border: 1px solid #626362;
     outline: none;
@@ -378,12 +376,12 @@
 #login input[type="submit"]:hover {
 background-color: rgb(187, 240, 237);
 box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
-
+color: black;
 }
 #Sign-up input[type="submit"]:hover {
     background-color: rgb(187, 240, 237);
     box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
-    
+    color: black;
     }
 .animated {
     animation-duration: 1500ms;
@@ -417,8 +415,9 @@ box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
 .profile{
     background-color: #227fa11c;
 }
+
 .Profile-container{
-  width: 450px;
+  width: 350px;
   margin: 120px auto 120px;
   background-color: #fff;
   padding: 0 20px 20px;
@@ -428,7 +427,6 @@ box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
 }
 .Profile-container:hover .avatar-flip {
   transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
 }
 .Profile-container:hover .avatar-flip img:first-child {
   opacity: 0;
@@ -481,3 +479,51 @@ box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
   margin-bottom: 20px;
   color: #666;
 }
+.Profile-container button{
+    display: block;
+    width: 100%;
+    height: 38px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    background:  #ffc107c5;
+    border-radius: 5px;
+    border: 1px solid #626362;
+    outline: none;
+    cursor: pointer;
+    color:black;
+    font-size: 14px;
+}
+.Profile-container button:hover {
+background-color: rgb(2, 121, 129);
+box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
+
+}
+
+.updateForm input[type="submit"] {
+    display: block;
+    width: 100%;
+    height: 38px;
+    box-sizing: border-box;
+    background:#ffc107c5;
+    border-radius: 5px;
+    border: 1px solid #626362;
+    outline: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 14px;
+}
+.updateForm input[type="submit"]:hover {
+background-color:rgb(2, 121, 129);
+box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
+
+}
+.edit-form{
+    width: 350px;
+    margin: 120px auto 120px;
+    background-color: #fff;
+    padding: 0 20px 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.075);
+    text-align: left;
+}
+

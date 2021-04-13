@@ -13,17 +13,54 @@
     <div class="avatar-flip">
          <img src="<%= results.image %>"  height="150" width="150" >
          <img src="<%= results.image %>"  height="150" width="150" >
-
     </div>
          <h2> <%= results.username %></h2>
           <h3> <%= results.email %> </h3> 
           <h4><%= results.age %> years old </h4>
          <h4> 📍 <%= results.country %> </h4>
          <h4> <%= results.phonenumber %></h4>  
-          </div>
-
+         <button class="updateButton">Update Your Info</button>
+         <form  action="/profile?_method=DELETE" method="POST">
+        <button type="submit">Delete your account</button>
+    </form>
+   </div>
 </main>
+
+  <% if (results) { %>     
+    <div class="edit-form">
+<form action="/profile?_method=PUT" method="POST" class="updateForm" >
+  <fieldset>
+    <label for="name">Name:</label>
+    <input class="input" type="text" id="name" name="username" value="<%= results.username %>" required>
+    <br>
+    <label for="email">Email:</label>
+    <input class="input" type="email" id="email" name="email" value="<%= results.email %>" required>
+    <br>
+    <label for="age">Age :</label>
+    <input class="input" type="number" id="checkAge" name="age" value="<%= results.age %>" required>
+    <br>
+    <label for="country">Country:</label>
+    <input class="input" type="text" id="country" name="country" value="<%= results.country %>"  required>
+    <br>
+    <label for="phoneNumber">phoneNumber:</label>
+    <input class="input" type="tel" id="phoneNumber" name="phoneNumber" value="<%= results.phonenumber %>" required>
+    <br>
+      <input type="submit" value="Update" id="button">
+  </fieldset>
+</form></div>
+<% } %>
+<footer>
 <%- include('../layout/footer') %>
+</footer>
+<script>
+  $(document).ready(function(){
+  $('.edit-form').hide();
+
+  $('.updateButton').click(() => {
+    $('.edit-form').toggle();
+  });
+});
+</script>
 <script src="js/app.js"></script>
 </body>
 </html> 
