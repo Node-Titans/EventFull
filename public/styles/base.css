@@ -335,7 +335,7 @@ footer{
 }
 
 
-@media only screen and (max-width:767px) {
+@media only screen and (min-width:767px) {
 
 	.footerOne{
 		padding: 30px;
@@ -361,10 +361,9 @@ footer{
 	.footerOne form{
 		display: block;
 	}
-	.footerFour{
-		position: relative;
-		right: 50px;
-	}
+	
+	
+	
 	.footerOne form button{
 		float: none;
 	}
