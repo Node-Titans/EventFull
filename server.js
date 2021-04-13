@@ -33,13 +33,13 @@ app.use(express.static('./public/js'));
 const client = new pg.Client({
   connectionString: DATABASE_URL,
 });
-
 // set storage engine
 const storage = multer.diskStorage({
   destination: './public/uploads/',
   filename: function(req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
-  }
+    cb(null, file.originalname)
+    }
+ 
 });
 
 const renderSearchPage = (req, res) => {
@@ -227,7 +227,7 @@ function handleProfilePic(req, res) {
           msg: 'Error : No file selected !!',
         });
       } else {
-        const image = `uploads/${req.file.fieldname}-${Date.now()}${path.extname(req.file.originalname)}`;
+        const image = `uploads/${req.file.originalname}`;
         const sqlQuery = 'INSERT INTO images (image) VALUES($1) RETURNING id;';
         const safeValues = [image];
         client.query(sqlQuery, safeValues).then(() => {
@@ -261,14 +261,18 @@ async function registerNewUser(req, res){
               error: error.message,
             });
           } else {
-            const newUser = 'INSERT INTO users (username, age , email, password, country , phoneNumber) VALUES($1, $2, $3, $4, $5,$6) RETURNING *';
-            const safeValues= [username, age , email,hashedPassword, country , phoneNumber];
+            const userimage='SELECT image FROM images ORDER BY ID DESC LIMIT 1';
+            client.query(userimage).then((data=>{
+            const image=data.rows[0].image;
+            const newUser = `INSERT INTO users (username, age ,image, email, password, country , phoneNumber) VALUES($1, $2, $3, $4, $5,$6,$7) RETURNING *`;
+            const safeValues= [username, age ,image, email,hashedPassword, country , phoneNumber];
             client.query(newUser, safeValues).then((results) => {
-              res.render('pages/user-signin-up/sign-up',{
-                massage :'Account created successfully!✔️' ,
+             res.render('pages/user-signin-up/sign-up',{
+              massage :'Account created successfully!✔️' ,  
               });
-
-            });
+            
+            }); }
+              ));
           }
         })
       }
@@ -343,14 +347,12 @@ function handleLogout( req, res) {
 function deleteEvent(req,res) {
   const eventId = req.params.id ;
   const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
-  console.log('eventId 😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎' , eventId);
 
 
   client.query(idq).then((data)=>{
-    console.log('I am here 😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎');
 
     const iduser=data.rows[0].loginid ;
-    console.log(' iduser 😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎',iduser);
+    
 
     const deleteQuery=` delete from users_events where event_id=$1 AND user_id=$2;`;
     const into = [eventId , iduser];
@@ -360,6 +362,23 @@ function deleteEvent(req,res) {
   })
 
 }
+
+app.get("/profile", function (req, res) {
+  const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
+  const userinf= 'SELECT * FROM users WHERE id=$1;';
+  client.query(idq).then((data)=>{
+    const iduser=data.rows[0].loginid ;
+    const into = [iduser];
+  client.query(userinf,into).then(results => {
+       console.log('😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎',results.rows[0]);
+     res.render('pages/user-signin-up/user-profile', { results: results.rows[0] });
+  });
+}).catch(error => { 
+  res.send({
+  error: err.message,
+});
+});
+}); 
 
 // API home page Routes
 
