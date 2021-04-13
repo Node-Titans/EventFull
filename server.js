@@ -405,34 +405,9 @@ app.get('/', renderMainPage);
 // Search Results
 app.post('/searches', renderSearchPage);
 
-app.post('/messages', (request, response) => {
-  let email = request.body['email'];
-  let message = request.body['message'];
-  console.log('email', email, 'message', message);
+app.post('/messages', sendMessage)
 
-  const emailParams = {
-    email: email,
-    subject: `Contact us from ${email}`,
-    message: message,
-  };
-  const mailOptions = {
-    from: process.env.EMAIL,
-    to: process.env.CONTACT_US_EMAIL,
-    subject: emailParams.subject,
-    template: "index",
-    context: { emailParams: emailParams, received: new Date() },
-  };
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-      response.json({ status: false });
-    } else {
-      console.log("Email sent: " + info.response);
-      sendResponse(emailParams,response);
-      response.json({ status: true });
-    }
-  });
-});
+
 
 app.post('/check',urlencodedParser,registerNewUser);
 app.get('/logout',handleLogout);
@@ -477,6 +452,36 @@ function sendResponse(params, response) {
     } else {
       console.log("Email sent: " + info.response);
       // response.json({ status: true });
+    }
+  });
+}
+
+// Send auto message for the user 
+function sendMessage (request, response) {
+  let email = request.body['email'];
+  let message = request.body['message'];
+  console.log('email', email, 'message', message);
+
+  const emailParams = {
+    email: email,
+    subject: `Contact us from ${email}`,
+    message: message,
+  };
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: process.env.CONTACT_US_EMAIL,
+    subject: emailParams.subject,
+    template: "index",
+    context: { emailParams: emailParams, received: new Date() },
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+      response.json({ status: false });
+    } else {
+      console.log("Email sent: " + info.response);
+      sendResponse(emailParams,response);
+      response.json({ status: true });
     }
   });
 }
