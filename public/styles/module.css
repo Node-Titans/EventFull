@@ -414,7 +414,9 @@ box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
     }
 }
 /*Profile Page */
-
+.profile{
+    background-color: #227fa11c;
+}
 .Profile-container{
   width: 450px;
   margin: 120px auto 120px;
