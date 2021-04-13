@@ -205,6 +205,9 @@ h3.title {
 }
 
 /*-- //Team --*/
+
+/*Userlist and details pages responsive */
+
 .list-container{
 	display: grid;
     grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
@@ -257,8 +260,8 @@ h3.title {
     margin-top: 10px;
   }
   .details-img{
-    width: 250px;
-    height: 250px;
+    width: fit-content;
+    height: fit-content;
   }
 }
 .social-nav li {
