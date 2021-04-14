@@ -361,7 +361,6 @@ async function handleLogin(req, res){
             const idquery=`INSERT INTO uidlogin (loginid) VALUES (${results.rows[0].id})`;
             client.query(idquery);
             userExist = true;
-            console.log("🚀🚀🚀🚀🚀🚀🚀 ~ file: server.js ~ line 369 ~ bcrypt.compare ~ userExist", userExist)
             res.redirect('/main-page');
 
           } else {
@@ -382,7 +381,6 @@ async function handleLogin(req, res){
 
 function handleLogout( req, res) {
   userExist = false ;
-  console.log("🚀  😎 😎 😎 😎 😎 😎 😎 😎 userExist", userExist);
   delete req.session;
   const deleteQuery = 'delete from uidlogin';
   client.query(deleteQuery);

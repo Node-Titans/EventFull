@@ -529,7 +529,8 @@ box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
 
 @media (max-width: 643px){
   #Sign-up {
-  width: 100%;
+  width: fit-content;
+  margin:0 0 100% 0 ;
   }
   #Sign-up *{
     width:90%;
