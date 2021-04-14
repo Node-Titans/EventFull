@@ -77,9 +77,9 @@ const storage = multer.diskStorage({
 const renderSearchPage = (req, res) => {
   const query = {
     apikey : process.env.EVENT_KEY ,
-    keyword : req? req.body.searched:'',
-    sort: req ? req.body.sortBy:'random',
-    countryCode :  req ? req.body.countryCode: 'US'
+    keyword : !req.body ? 'animation' :req.body.searched,
+    sort: !req.body ? 'random':req.body.sortBy,
+    countryCode :  !req.body ?'US': req.body.countryCode
   }
   const url =  'https://app.ticketmaster.com/discovery/v2/events?&locale=*';
 
@@ -118,7 +118,7 @@ function addEventHomePage(req,res){
   const safeValues=[eventId,eventName,country,countryCode,city,venues,img,enddate,startdate,Description,url];
   const sqlQuery='INSERT INTO events (event_id,event_name,country,countryCode,city,venues,image_url,end_date,start_date,description,url) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) ON CONFLICT (event_id) DO NOTHING;'
   client.query(sqlQuery,safeValues).then(()=>{
-    res.redirect('/');
+    res.redirect('/main-page');
   }).catch((err) => errorHandler(err, req, res));
 }
 
@@ -148,7 +148,7 @@ function addEventSearch(req,res){
     client.query(sqlQuery,safeValues).then(()=>{
       const idinsert=`INSERT INTO users_events (user_id,event_id) VALUES ($1 , $2) ON CONFLICT (user_id,event_id) DO NOTHING;`;
       client.query(idinsert,safevalues2).then(()=>{
-        res.redirect('/');
+        res.redirect('/main-page');
       });
     });
   }).catch((err) => errorHandler(err, req, res));
