@@ -536,7 +536,7 @@ box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
     display: block;
     margin: 2% auto;
   }
-  input[type="checkbox" i] {
+  #accept{
 
     display: inline-block !important;
     width: 4% !important;
