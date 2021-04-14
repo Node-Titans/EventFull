@@ -7,16 +7,16 @@ const cors = require('cors');
 const pg = require('pg');
 const methodOverride = require('method-override');
 const app = express();
-const nodemailer = require("nodemailer");
-const path = require("path");
-const hbs = require("nodemailer-express-handlebars");
+const nodemailer = require('nodemailer');
+const path = require('path');
+const hbs = require('nodemailer-express-handlebars');
 const multer = require('multer'); // to upload image
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
-const passport = require('passport');
+// const passport = require('passport');
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  service: 'gmail',
   auth: {
     user: process.env.EMAIL,
     pass: process.env.EMAIL_PASS,
@@ -24,13 +24,13 @@ const transporter = nodemailer.createTransport({
 });
 
 transporter.use(
-  "compile",
+  'compile',
   hbs({
     // viewEngine: "express-handlebars",
     // viewPath: "./views/",
     viewEngine: {
-      extName: ".hbs",
-      partialsDir: path.resolve(__dirname, "./views/"),
+      extName: '.hbs',
+      partialsDir: path.resolve(__dirname, './views/'),
       defaultLayout: false,
       // partialsDir: [
       //   //  path to your partials
@@ -38,9 +38,9 @@ transporter.use(
       // ],
     },
 
-    viewPath: path.resolve(__dirname, "./views/"),
+    viewPath: path.resolve(__dirname, './views/'),
 
-    extName: ".hbs",
+    extName: '.hbs',
   })
 );
 
@@ -70,15 +70,15 @@ const storage = multer.diskStorage({
   destination: './public/uploads/',
   filename: function(req, file, cb) {
     cb(null, file.originalname)
-    }
- 
+  }
+
 });
 
 const renderSearchPage = (req, res) => {
   const query = {
     apikey : process.env.EVENT_KEY ,
     keyword : req? req.body.searched:'',
-    sort: req ?  req.body.sortBy:'random',
+    sort: req ? req.body.sortBy:'random',
     countryCode :  req ? req.body.countryCode: 'US'
   }
   const url =  'https://app.ticketmaster.com/discovery/v2/events?&locale=*';
@@ -92,12 +92,18 @@ const renderSearchPage = (req, res) => {
       // console.log('🚀 event', event);
     res.render('pages/event/search', { events: event });
 
-  }).catch((err) => {
+  }).catch(() => {
     res.render('pages/event/search', { events: 0 });
   });
 }
 
 function addEventHomePage(req,res){
+  const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
+  client.query(idq).then((data)=>{
+    if (!data.rows[0]) {
+      res.redirect('/');
+    }
+  });
   const eventId=req.body.eventId;
   const eventName=req.body.eventName;
   const img=req.body.img;
@@ -117,6 +123,12 @@ function addEventHomePage(req,res){
 }
 
 function addEventSearch(req,res){
+  const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
+  client.query(idq).then((data)=>{
+    if (!data.rows[0]) {
+      res.redirect('/');
+    }
+  });
   const eventId=req.body.eventId;
   const eventName=req.body.eventName;
   const img=req.body.img;
@@ -128,7 +140,6 @@ function addEventSearch(req,res){
   const startdate=req.body.startdate;
   const Description=req.body.Description;
   const url=req.body.url;
-  const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
   client.query(idq).then((data)=>{
     const iduser=data.rows[0].loginid;
     const safeValues=[eventId,eventName,country,countryCode,city,venues,img,enddate,startdate,Description,url];
@@ -159,8 +170,12 @@ const renderMainPage = (req, res) => {
 };
 
 function renderYourList(req,res){
-  // const userlogin='SELECT * FROM uidlogin ORDER BY ID DESC LIMIT 1;';
   const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
+  client.query(idq).then((data)=>{
+    if (!data.rows[0]) {
+      res.redirect('/');
+    }
+  });
   client.query(idq).then((data)=>{
     const iduser=data.rows[0].loginid;
     const sql=`select * from users join users_events on (users.id=users_events.user_id) join events on (events.event_id=users_events.event_id) where users.id=${iduser};`;
@@ -296,16 +311,16 @@ async function registerNewUser(req, res){
           } else {
             const userimage='SELECT image FROM images ORDER BY ID DESC LIMIT 1';
             client.query(userimage).then((data=>{
-            const image=data.rows[0].image;
-            const newUser = `INSERT INTO users (username, age ,image, email, password, country , phoneNumber) VALUES($1, $2, $3, $4, $5,$6,$7) RETURNING *`;
-            const safeValues= [username, age ,image, email,hashedPassword, country , phoneNumber];
-            client.query(newUser, safeValues).then((results) => {
-             res.render('pages/user-signin-up/sign-up',{
-              massage :'Account created successfully!✔️' ,  
-              });
-            
-            }); }
-              ));
+              const image=data.rows[0].image;
+              const newUser = `INSERT INTO users (username, age ,image, email, password, country , phoneNumber) VALUES($1, $2, $3, $4, $5,$6,$7) RETURNING *`;
+              const safeValues= [username, age ,image, email,hashedPassword, country , phoneNumber];
+              client.query(newUser, safeValues).then(() => {
+                res.render('pages/user-signin-up/sign-up',{
+                  massage :'Account created successfully!✔️' ,
+                });
+
+              }); }
+            ));
           }
         })
       }
@@ -328,7 +343,7 @@ async function registerNewUser(req, res){
     });
   }}
 
-
+let userExist ;
 async function handleLogin(req, res){
   try {
     const {username, password } = req.body;
@@ -350,7 +365,7 @@ async function handleLogin(req, res){
             // console.log('userid',results.rows[0].id);
             const idquery=`INSERT INTO uidlogin (loginid) VALUES (${results.rows[0].id})`;
             client.query(idquery);
-            res.redirect('/');
+            res.redirect('/main-page');
 
           } else {
             res.render('pages/user-signin-up/sign-in',{
@@ -370,6 +385,9 @@ async function handleLogin(req, res){
 
 function handleLogout( req, res) {
   delete req.session;
+  const deleteQuery = 'delete from uidlogin';
+  client.query(deleteQuery);
+  userExist = 0 ;
   res.render('pages/user-signin-up/sign-in');// will always fire after session is destroyed
 
 
@@ -380,13 +398,8 @@ function handleLogout( req, res) {
 function deleteEvent(req,res) {
   const eventId = req.params.id ;
   const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
-
-
   client.query(idq).then((data)=>{
-
     const iduser=data.rows[0].loginid ;
-    
-
     const deleteQuery=` delete from users_events where event_id=$1 AND user_id=$2;`;
     const into = [eventId , iduser];
     client.query(deleteQuery, into).then(() =>{
@@ -396,21 +409,20 @@ function deleteEvent(req,res) {
 
 }
 
-app.get("/profile", function (req, res) {
+app.get('/profile', function (req, res) {
   const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
   const userinf= 'SELECT * FROM users WHERE id=$1;';
   client.query(idq).then((data)=>{
+    if (!data.rows[0]) {
+      res.redirect('/');
+    }
     const iduser=data.rows[0].loginid ;
     const into = [iduser];
-  client.query(userinf,into).then(results => {
-     res.render('pages/user-signin-up/user-profile', { results: results.rows[0] });
+    client.query(userinf,into).then(results => {
+      res.render('pages/user-signin-up/user-profile', { results: results.rows[0] });
+    });
   });
-}).catch(error => { 
-  res.send({
-  error: err.message,
 });
-});
-}); 
 
 app.put('/profile',urlencodedParser, handleUpdateProfile);
 app.delete('/profile',handleDeleteAccount);
@@ -420,26 +432,26 @@ app.delete('/profile',handleDeleteAccount);
 function handleUpdateProfile(req, res) {
   const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
   client.query(idq).then((data)=>{
-  const iduser=data.rows[0].loginid ;
-  const { username, age ,image, email, country , phoneNumber } = req.body;
-  const safeValues = [username, age ,email, country , phoneNumber,iduser];
-  const updateQuery = 'UPDATE users SET username=$1, age=$2, email=$3, country=$4, phoneNumber=$5 WHERE id=$6;';
-  client.query(updateQuery, safeValues).then(() => {
+    const iduser=data.rows[0].loginid ;
+    const { username, age , email, country , phoneNumber } = req.body;
+    const safeValues = [username, age ,email, country , phoneNumber,iduser];
+    const updateQuery = 'UPDATE users SET username=$1, age=$2, email=$3, country=$4, phoneNumber=$5 WHERE id=$6;';
+    client.query(updateQuery, safeValues).then(() => {
       res.redirect('/profile');
-  })}).catch((err) => errorHandler(err, req, res));
-};
+    })}).catch((err) => errorHandler(err, req, res));
+}
 
 function handleDeleteAccount(req, res) {
   const idq='SELECT loginid FROM uidlogin ORDER BY ID DESC LIMIT 1;';
   const deleteQuery = 'DELETE FROM users WHERE id=$1;';
-    client.query(idq).then((data)=>{
+  client.query(idq).then((data)=>{
     const iduser=data.rows[0].loginid ;
     const into = [iduser];
-  client.query(deleteQuery,into).then(results => {
-      res.redirect('/sign-in');
-  })
-}).catch((err) => errorHandler(err, req, res));
-};
+    client.query(deleteQuery,into).then(() => {
+      res.redirect('/');
+    })
+  }).catch((err) => errorHandler(err, req, res));
+}
 
 // API home page Routes
 
@@ -448,7 +460,7 @@ app.post('/homepage',addEventHomePage);
 app.post('/searchespage',addEventSearch)
 app.get('/user',renderYourList);
 app.get('/user/:id',renderEventDetails);
-app.get('/', renderMainPage);
+app.get('/main-page', renderMainPage);
 // Search Results
 app.post('/searches', renderSearchPage);
 
@@ -471,7 +483,7 @@ app.get('/about', (req, res) => {
   res.render('pages/aboutUs/aboutUs')
 });
 // sign in page
-app.get('/sign-in',(req,res)=>{
+app.get('/',(req,res)=>{
   res.render('pages/user-signin-up/sign-in');
 });
 // Delete Book in The Database
@@ -489,7 +501,7 @@ function sendResponse(params, response) {
     from: process.env.EMAIL,
     to: params.email,
     subject: `Thank you for contacting us`,
-    template: "response",
+    template: 'response',
     context: { emailParams: params },
   };
   transporter.sendMail(mailOptions, function (error, info) {
@@ -497,13 +509,13 @@ function sendResponse(params, response) {
       console.log(error);
       //response.json({ status: false });
     } else {
-      console.log("Email sent: " + info.response);
+      console.log('Email sent: ' + info.response);
       // response.json({ status: true });
     }
   });
 }
 
-// Send auto message for the user 
+// Send auto message for the user
 function sendMessage (request, response) {
   let email = request.body['email'];
   let message = request.body['message'];
@@ -518,7 +530,7 @@ function sendMessage (request, response) {
     from: process.env.EMAIL,
     to: process.env.CONTACT_US_EMAIL,
     subject: emailParams.subject,
-    template: "index",
+    template: 'index',
     context: { emailParams: emailParams, received: new Date() },
   };
   transporter.sendMail(mailOptions, function (error, info) {
@@ -526,7 +538,7 @@ function sendMessage (request, response) {
       console.log(error);
       response.json({ status: false });
     } else {
-      console.log("Email sent: " + info.response);
+      console.log('Email sent: ' + info.response);
       sendResponse(emailParams,response);
       response.json({ status: true });
     }
