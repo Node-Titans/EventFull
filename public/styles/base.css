@@ -224,6 +224,7 @@ footer{
 
 .footerOne form{
 	display: inline-block;
+	margin-right: 20%;
 }
 
 .footerOne form input,
@@ -362,9 +363,13 @@ footer{
 		display: block;
 	}
 	
+
+	.footerOne form input , .footerOne form textarea {
+		width: 161%;
+	}
 	
 	
-	.footerOne form button{
+	.footerOne form button {
 		float: none;
 		padding-bottom: 10px;
 	}
