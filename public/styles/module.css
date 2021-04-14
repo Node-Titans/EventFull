@@ -527,3 +527,25 @@ box-shadow:inset 1px 1px 0px #d7e0d0, 1px 2px 1px rgba(15, 4, 75, 0.808);
     text-align: left;
 }
 
+@media (max-width: 643px){
+  #Sign-up {
+  width: 100%;
+  }
+  #Sign-up *{
+    width:90%;
+    display: block;
+    margin: 2% auto;
+  }
+  input[type="checkbox" i] {
+
+    display: inline-block !important;
+    width: 4% !important;
+  }
+
+ .terms{
+  display: inline-block !important;
+
+ }
+
+
+}
