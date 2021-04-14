@@ -226,8 +226,20 @@ h3.title {
 }
 
 @media (max-width: 800px) {
+.main1{
+  width:100%;
+}
+.list-container {
+  width: 90%;
+  margin: 0 auto;
+  padding:0;
+  width:fit-content;
+}
+  .list {
+    margin: 0 auto;
+}
   .event-details-c{
-    margin: auto auto auto;
+    margin: 0 auto;
   }
   .event-details-l{
     width: fit-content;
