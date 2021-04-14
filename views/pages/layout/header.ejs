@@ -9,7 +9,7 @@
 
 
         <div id="myLinks">
-            <a href="/">Home</a>
+            <a href="/main-page">Home</a>
             <form action="/searches" method="POST" id="search" style="display: inline">
             
                 <input type="hidden" value="" name="searched">
@@ -17,8 +17,10 @@
             <input type="hidden" value="US" name="countryCode">
                 <a href="javascript:{}" onclick="document.getElementById('search').submit(); return false;">Search</a>
                 </form>
-            <a href="/user">Your list</a>
-            <a href="/about">About</a>
+            <a href="/user">Your list</a>    
+            <a href="/">sign in</a>
+            <a href="/profile">profile</a>
+            <a href="/about">About Us</a>
             <a href="/logout">Logout</a>
         </div>
 
@@ -39,8 +41,10 @@
                 </form>
                 </li> 
             
-           <li> <a href="/user">Your list</a> </li>   
-           <li>  <a href="/aboutus">About</a></li>  
+           <li> <a href="/user">Your list</a> </li> 
+            <li> <a href="/">sign in</a></li>  
+             <li>  <a href="/profile">profile</a></li>    
+           <li>  <a href="/about">About Us</a></li>  
             <li> <a href="/logout">Logout</a></li>  
           </ul>
         </div>
