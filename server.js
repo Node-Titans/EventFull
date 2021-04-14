@@ -85,15 +85,13 @@ const renderSearchPage = (req, res) => {
 
   superagent.get(url).query(query).then((data) => {
     const eventData = data.body._embedded.events;
-    // eventData = [eventData];
     const event = eventData.map(event => {
       return new Event(event);
     });
-      // console.log('🚀 event', event);
-    res.render('pages/event/search', { events: event });
+    res.render('pages/event/search', { events: event , user: userExist });
 
   }).catch(() => {
-    res.render('pages/event/search', { events: 0 });
+    res.render('pages/event/search', { events: 0 , user: userExist });
   });
 }
 
@@ -165,7 +163,7 @@ const renderMainPage = (req, res) => {
     const event = eventData.map(event => {
       return new Event(event);
     });
-    res.render('pages/event/index', { events: event });
+    res.render('pages/event/index', { events: event , user: userExist });
   }).catch((err) => errorHandler(err, req, res));
 };
 
@@ -180,7 +178,7 @@ function renderYourList(req,res){
     const iduser=data.rows[0].loginid;
     const sql=`select * from users join users_events on (users.id=users_events.user_id) join events on (events.event_id=users_events.event_id) where users.id=${iduser};`;
     client.query(sql).then((results)=>{
-      res.render('pages/user/userList',{searchResults:results.rows})
+      res.render('pages/user/userList',{searchResults:results.rows , user: userExist })
     });
   }).catch((err) => errorHandler(err, req, res));
 }
@@ -189,14 +187,11 @@ function renderEventDetails(req,res){
   const sqlQuery='SELECT * FROM events WHERE id=$1';
   const saveValues=[eventid];
   client.query(sqlQuery,saveValues).then((results)=>{
-    res.render('pages/user/details',{results:results.rows});
+    res.render('pages/user/details',{results:results.rows , user: userExist });
   }).catch((err) => errorHandler(err, req, res));
 }
 
-// Error Handler
-// function errorHandler(err, req, res) {
-//   res.render('pages/error', { err :err.message});
-// }
+
 
 // wrong path rout
 const handelWrongPath = (err, req, res) => {
@@ -365,6 +360,8 @@ async function handleLogin(req, res){
             // console.log('userid',results.rows[0].id);
             const idquery=`INSERT INTO uidlogin (loginid) VALUES (${results.rows[0].id})`;
             client.query(idquery);
+            userExist = true;
+            console.log("🚀🚀🚀🚀🚀🚀🚀 ~ file: server.js ~ line 369 ~ bcrypt.compare ~ userExist", userExist)
             res.redirect('/main-page');
 
           } else {
@@ -384,13 +381,12 @@ async function handleLogin(req, res){
 
 
 function handleLogout( req, res) {
+  userExist = false ;
+  console.log("🚀  😎 😎 😎 😎 😎 😎 😎 😎 userExist", userExist);
   delete req.session;
   const deleteQuery = 'delete from uidlogin';
   client.query(deleteQuery);
-  userExist = 0 ;
   res.render('pages/user-signin-up/sign-in');// will always fire after session is destroyed
-
-
 }
 
 
@@ -419,7 +415,7 @@ app.get('/profile', function (req, res) {
     const iduser=data.rows[0].loginid ;
     const into = [iduser];
     client.query(userinf,into).then(results => {
-      res.render('pages/user-signin-up/user-profile', { results: results.rows[0] });
+      res.render('pages/user-signin-up/user-profile', { results: results.rows[0] , user: userExist });
     });
   });
 });
@@ -480,7 +476,7 @@ app.get('/sign-up', (req, res) => {
   res.render('pages/user-signin-up/sign-up')
 });
 app.get('/about', (req, res) => {
-  res.render('pages/aboutUs/aboutUs')
+  res.render('pages/aboutUs/aboutUs' , {user: userExist })
 });
 // sign in page
 app.get('/',(req,res)=>{
