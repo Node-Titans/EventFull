@@ -43,7 +43,7 @@
 
  <% events.forEach(el => { %>
 <article>
- <img class="index-img" src="<%=el.imageUrl%>" alt="<%= el.eventName %>">
+<a style="text-decoration: none;" href="<%=el.url%>" target="_blank"> <img class="index-img" src="<%=el.imageUrl%>" alt="<%= el.eventName %>"></a>  
   <div class="text">
  <h4 class="index-h4"> <%= el.eventName %></h4>
  <h4>Location :  <%= el.venues %> ,  <%= el.city %>  ,  <%= el.country %> </h4>
