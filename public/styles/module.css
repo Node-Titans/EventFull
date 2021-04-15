@@ -5,6 +5,11 @@
     block-size: border-box;
 }
 
+.index-img:hover{
+  opacity: 0.7;
+  cursor: pointer;
+  }
+
 .index-main {
     margin: 0 2% 10% 2%;
 }
@@ -26,7 +31,6 @@
 }
 @media (max-width: 643px){
     :root {
-        /* --primary-color: rgba(0, 0, 0, 0.924); */
         --overlay-color: rgba(37, 117, 160, 0.85);
         --menu-speed: 0.75s;
       }
